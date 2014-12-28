@@ -37,7 +37,7 @@ end
 
 Vagrant.configure("2") do |config|
 	(1..$numberOfCoreInstances).each do |instanceID|
-		config.vm.define vmName = "core-%02d" % i do |core|
+		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
 			core.vm.box = "coreos-%s" % $coreUpdateChannel
 			core.vm.box_version = ">= 308.0.1"
@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
 			end
 
 			if $exposeDocker
-				core.vm.network "forwarded_port", guest: 2375, host: ($exposedDockerPort + i - 1), auto_correct: true
+				core.vm.network "forwarded_port", guest: 2375, host: ($exposedDockerPort + instanceID - 1), auto_correct: true
 			end
 
 			if File.Exists?($coreUserConfiguration)
