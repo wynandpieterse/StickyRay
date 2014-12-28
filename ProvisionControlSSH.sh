@@ -1,4 +1,4 @@
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -26,7 +26,8 @@
 #!/bin/bash
 
 cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
-chmod 400 ~/.ssh/VagrantPrivateKey
+chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
+chown vagrant:vagrant VagrantPrivateKey
 
 cat > /home/vagrant/.ansible.cfg << EOF
 [defaults]
@@ -36,15 +37,14 @@ host_key_checking = False
 ssh_args = -o ControlMaster=auto -o ControlPersist=60s -F /home/vagrant/.ssh.cfg
 EOF
 
-for (( i = 1; i <= $1; i++ ))
-do
-	printf 'Host 10.10.10.1%s' '$1' >> /home/vagrant/.ssh.cfg
-	printf '   User core' >> /home/vagrant/.ssh.cfg
-	printf '   UserKnownHostsFile /dev/null' >> /home/vagrant/.ssh.cfg
-	printf '   StrictHostKeyChecking no' >> /home/vagrant/.ssh.cfg
-	printf '   PasswordAuthentication no' >> /home/vagrant/.ssh.cfg
-	printf '   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey' >> /home/vagrant/.ssh.cfg
-	printf '   IdentitiesOnly yes' >> /home/vagrant/.ssh.cfg
-	printf '   LogLevel FATAL' >> /home/vagrant/.ssh.cfg
-	printf ' ' >> /home/vagrant/.ssh.cfg
-done
+cat > /home/vagrant/.ssh.cfg << EOF
+Host *
+   User core
+   UserKnownHostsFile /dev/null
+   StrictHostKeyChecking no
+   PasswordAuthentication no
+   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey
+   IdentitiesOnly yes
+   LogLevel FATAL
+
+EOF
