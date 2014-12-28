@@ -36,6 +36,28 @@ if File.exist?($configurationVariables)
 end
 
 Vagrant.configure("2") do |config|
+	config.ssh.insert_key = true
+
+	if $enableSerialLogging
+		logdir = File.join(File.dirname(__FILE__), "logs/vagrant/instanceserial/")
+		FileUtils.mkdir_p(logdir)
+
+		serialFile = File.join(logdir, "%s.log" % vm_name)
+		FileUtils.touch(serialFile)
+
+		config.vm.provider :vmware_fusion do |v, override|
+			v.vmx["serial0.present"] = "TRUE"
+			v.vmx["serial0.fileType"] = "file"
+			v.vmx["serial0.fileName"] = serialFile
+			v.vmx["serial0.tryNoRxLoss"] = "FALSE"
+		end
+
+		config.vm.provider :virtualbox do |vb, override|
+			vb.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
+			vb.customize ["modifyvm", :id, "--uartmode1", serialFile]
+		end
+	end
+
 	(1..$numberOfCoreInstances).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
