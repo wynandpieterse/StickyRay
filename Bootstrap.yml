@@ -24,26 +24,8 @@
 # Version 0.0.3
 #
 
-$enableSerialLogging = false
-
-$virtualBoxGUI = false
-$virtualBoxCPUs = 1
-$virtualBoxMemory = 1024
-
-$coreUpdateChannel = 'alpha'
-$exposeDocker = true
-$exposedDockerPort = 2375
-
-if File.exists?('UserData.yml') && ARGV[0].eql?('up')
-	require 'open-uri'
-	require 'yaml'
-
-	token = open('https://discovery.etcd.io/new').read
-
-	data = YAML.load(IO.readlines('UserData.yml')[1..-1].join)
-	data['coreos']['etcd']['discovery'] = token
-
-	yaml = YAML.dump(data)
-
-	File.open('UserData.yml', 'w') { |file| file.write("#{yaml}") }
-end
+- name: Bootstrap CoreOS hosts
+  hosts: core
+  gather_facts: false
+  roles:
+    - defunctzombie.coreos-bootstrap

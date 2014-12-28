@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # 
 # The MIT License (MIT)
 # 
@@ -24,26 +25,34 @@
 # Version 0.0.3
 #
 
-$enableSerialLogging = false
+require 'json'
 
-$virtualBoxGUI = false
-$virtualBoxCPUs = 1
-$virtualBoxMemory = 1024
-
-$coreUpdateChannel = 'alpha'
-$exposeDocker = true
-$exposedDockerPort = 2375
-
-if File.exists?('UserData.yml') && ARGV[0].eql?('up')
-	require 'open-uri'
-	require 'yaml'
-
-	token = open('https://discovery.etcd.io/new').read
-
-	data = YAML.load(IO.readlines('UserData.yml')[1..-1].join)
-	data['coreos']['etcd']['discovery'] = token
-
-	yaml = YAML.dump(data)
-
-	File.open('UserData.yml', 'w') { |file| file.write("#{yaml}") }
+module LT
+  module Ansible
+    def self.local_inventory
+      {
+        :"_meta" => {
+          :hostvars => {
+            :core01 => {
+              ansible_ssh_host: "10.10.10.11",
+              ansible_python_interpreter: "PATH=/home/core/bin:$PATH python"
+            },
+            :core02 => {
+              ansible_ssh_host: "10.10.10.12",
+              ansible_python_interpreter: "PATH=/home/core/bin:$PATH python"
+            },
+            :core03 => {
+              ansible_ssh_host: "10.10.10.13",
+              ansible_python_interpreter: "PATH=/home/core/bin:$PATH python"
+            }
+          }
+        },
+        :core => {
+          :hosts => ["core01", "core02", "core03"]
+        }
+      }
+    end
+  end
 end
+
+puts LT::Ansible::local_inventory.to_json

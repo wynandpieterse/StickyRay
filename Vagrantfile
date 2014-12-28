@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 	config.ssh.insert_key = true
 
 	if $enableSerialLogging
-		logdir = File.join(File.dirname(__FILE__), "Logs/Vagrant/InstanceSerialOutput/")
+		logdir = File.join(File.dirname(__FILE__), "logs/vagrant/serial/")
 		FileUtils.mkdir_p(logdir)
 
 		serialFile = File.join(logdir, "%s.log" % vm_name)
@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	(1..$numberOfCoreInstances).each do |instanceID|
+	(1..3).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
 			core.vm.box = "coreos-%s" % $coreUpdateChannel
@@ -99,7 +99,7 @@ Vagrant.configure("2") do |config|
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
-		control.vm.provision :shell, :path => "ProvisionControlBase.sh", :privileged => true, :args => $numberOfCoreInstances
+		control.vm.provision :shell, :path => "ProvisionControlBase.sh", :privileged => true
 		control.vm.provision :shell, :path => "ProvisionControlSSH.sh", :privileged => true
 		control.vm.provision :shell, :path => "ProvisionControlAnsible.sh", :privileged => true
 		control.vm.provision :shell, :path => "ProvisionControlDocker.sh", :privileged => true
