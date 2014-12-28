@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # The MIT License (MIT)
 # 
@@ -21,9 +22,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.3
+# Version 0.0.4
 #
-#!/bin/bash
 
 cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
 chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
