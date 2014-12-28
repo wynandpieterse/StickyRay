@@ -58,7 +58,7 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	(1..$numberOfCoreInstances).each do |instanceID|
+	(1..3).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
 			core.vm.box = "coreos-%s" % $coreUpdateChannel
