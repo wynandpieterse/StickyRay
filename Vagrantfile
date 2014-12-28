@@ -59,7 +59,9 @@ Vagrant.configure("2") do |config|
 				core.vbguest.auto_update = false
 			end
 
-
+			if $exposeDocker
+				config.vm.network "forwarded_port", guest: 2375, host: ($exposedDockerPort + i - 1), auto_correct: true
+			end
 		end
 	end
 end
