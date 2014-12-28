@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 	config.ssh.insert_key = true
 
 	if $enableSerialLogging
-		logdir = File.join(File.dirname(__FILE__), "Logs/Vagrant/InstanceSerialOutput/")
+		logdir = File.join(File.dirname(__FILE__), "logs/vagrant/serial/")
 		FileUtils.mkdir_p(logdir)
 
 		serialFile = File.join(logdir, "%s.log" % vm_name)
