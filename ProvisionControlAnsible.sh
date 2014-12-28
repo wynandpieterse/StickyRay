@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -21,30 +22,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.3
+# Version 0.0.4
 #
 
-$enableSerialLogging = false
+apt-get install ansible -y
 
-$virtualBoxGUI = false
-$virtualBoxCPUs = 1
-$virtualBoxMemory = 1024
-
-$numberOfCoreInstances = 3
-$coreUpdateChannel = 'alpha'
-$exposeDocker = true
-$exposedDockerPort = 2375
-
-if File.exists?('userdata.yml') && ARGV[0].eql?('up')
-	require 'open-uri'
-	require 'yaml'
-
-	token = open('https://discovery.etcd.io/new').read
-
-	data = YAML.load(IO.readlines('userdata.yml')[1..-1].join)
-	data['coreos']['etcd']['discovery'] = token
-
-	yaml = YAML.dump(data)
-
-	File.open('userdata.yml', 'w') { |file| file.write("#{yaml}") }
-end
+ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/roles --force
+ansible-playbook -i /vagrant/LocalInventory.rb /vagrant/Bootstrap.yml

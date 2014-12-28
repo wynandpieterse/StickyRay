@@ -1,4 +1,5 @@
-# 
+#!/bin/bash
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -21,8 +22,29 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.3
+# Version 0.0.4
 #
-#!/bin/bash
 
-apt-get install ansible -y
+cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
+chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
+chown vagrant:vagrant VagrantPrivateKey
+
+cat > /home/vagrant/.ansible.cfg << EOF
+[defaults]
+host_key_checking = False
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s -F /home/vagrant/.ssh.cfg
+EOF
+
+cat > /home/vagrant/.ssh.cfg << EOF
+Host *
+   User core
+   UserKnownHostsFile /dev/null
+   StrictHostKeyChecking no
+   PasswordAuthentication no
+   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey
+   IdentitiesOnly yes
+   LogLevel FATAL
+
+EOF
