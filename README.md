@@ -2,7 +2,6 @@ StickyRay
 =========
 
 # Introduction
-=========
 
 StickyRay is a system that helps you develop micro-services for web scale. It uses
 the following components to ease development:
@@ -16,4 +15,3 @@ the following components to ease development:
 
 =========
 ###### Version 0.0.1
-=========
