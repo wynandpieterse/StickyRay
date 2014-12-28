@@ -92,4 +92,8 @@ Vagrant.configure("2") do |config|
 			end
 		end
 	end
+
+	config.vm.define "control" do |control|
+		
+	end
 end
