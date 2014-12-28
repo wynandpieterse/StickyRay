@@ -33,7 +33,9 @@ coreos:
   etcd:
     addr: $public_ipv4:4001
     peer-addr: $public_ipv4:7001
-    discovery: https://discovery.etcd.io/acf164faa3fd7ee9766627d76ec1d32e
+
+    # This will be regenereted every time you call vagrant destroy, then vagrant up
+    discovery: https://discovery.etcd.io/<token>
   fleet:
     public-ip: $public_ipv4
   units:
