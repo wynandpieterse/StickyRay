@@ -36,4 +36,11 @@ if File.exist?($configurationVariables)
 end
 
 Vagrant.configure("2") do |config|
+	(1..$numberOfCoreInstances).each do |instanceID|
+		config.vm.define vmName = "core-%02d" % i do |core|
+			core.vm.box = "coreos-%s" % $coreUpdateChannel
+			core.vm.box_version = ">= 308.0.1"
+			core.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % $coreUpdateChannel
+		end
+	end
 end
