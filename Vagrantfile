@@ -99,6 +99,6 @@ Vagrant.configure("2") do |config|
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
-		control.vm.provision :shell, :path => "provisioncore.sh", :privileged => true
+		control.vm.provision :shell, :path => "provisioncontrol.sh", :privileged => true
 	end
 end
