@@ -23,3 +23,14 @@
 # 
 # Version 0.0.2
 #
+
+$enableSerialLogging = false
+
+$virtualBoxGUI = false
+$virtualBoxCPUs = 1
+$virtualBoxMemory = 1024
+
+$numberOfInstance = 3
+$updateChannel = alpha
+$exposeDocker = true
+$exposedDockerPort = 2375
