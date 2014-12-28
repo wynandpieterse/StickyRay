@@ -38,9 +38,28 @@ end
 Vagrant.configure("2") do |config|
 	(1..$numberOfCoreInstances).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % i do |core|
+			core.vm.hostname = vmName
 			core.vm.box = "coreos-%s" % $coreUpdateChannel
 			core.vm.box_version = ">= 308.0.1"
-			core.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % $coreUpdateChannel
+
+			core.vm.provider :virtualbox do |vb, override|
+				override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % $coreUpdateChannel
+			end
+
+			core.vm.provider :vmware_fusion do |vb, override|
+				override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant_vmware_fusion.json" % $coreUpdateChannel
+			end
+
+			core.vm.provider :virtualbox do |v|
+				v.check_guest_additions = false
+				v.functional_vboxsf     = false
+			end
+
+			if Vagrant.has_plugin?("vagrant-vbguest") then
+				core.vbguest.auto_update = false
+			end
+
+
 		end
 	end
 end
