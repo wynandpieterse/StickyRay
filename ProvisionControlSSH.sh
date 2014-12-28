@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # The MIT License (MIT)
 # 
@@ -23,7 +24,6 @@
 # 
 # Version 0.0.4
 #
-#!/bin/bash
 
 cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
 chmod 400 /home/vagrant/.ssh/VagrantPrivateKey

@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -23,6 +24,5 @@
 # 
 # Version 0.0.4
 #
-#!/bin/bash
 
 apt-get update
