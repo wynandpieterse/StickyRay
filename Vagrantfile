@@ -36,4 +36,38 @@ if File.exist?($configurationVariables)
 end
 
 Vagrant.configure("2") do |config|
+	(1..$numberOfCoreInstances).each do |instanceID|
+		config.vm.define vmName = "core-%02d" % instanceID do |core|
+			core.vm.hostname = vmName
+			core.vm.box = "coreos-%s" % $coreUpdateChannel
+			core.vm.box_version = ">= 308.0.1"
+			core.vm.network :private_network, ip: "10.10.10.#{instanceID + 9}"
+
+			core.vm.provider :virtualbox do |vb, override|
+				override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % $coreUpdateChannel
+			end
+
+			core.vm.provider :vmware_fusion do |vb, override|
+				override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant_vmware_fusion.json" % $coreUpdateChannel
+			end
+
+			core.vm.provider :virtualbox do |v|
+				v.check_guest_additions = false
+				v.functional_vboxsf     = false
+			end
+
+			if Vagrant.has_plugin?("vagrant-vbguest") then
+				core.vbguest.auto_update = false
+			end
+
+			if $exposeDocker
+				core.vm.network "forwarded_port", guest: 2375, host: ($exposedDockerPort + instanceID - 1), auto_correct: true
+			end
+
+			if File.exists?($coreUserConfiguration)
+				core.vm.provision :file, :source => "#{$coreUserConfiguration}", :destination => "/tmp/vagrantfile-user-data"
+				core.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
+			end
+		end
+	end
 end
