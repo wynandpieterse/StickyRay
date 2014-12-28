@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # 
 # The MIT License (MIT)
 # 
@@ -23,7 +24,6 @@
 # 
 # Version 0.0.3
 #
-#!/usr/bin/env ruby
 
 require 'json'
 
