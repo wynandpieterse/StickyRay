@@ -31,5 +31,9 @@ Vagrant.require_version ">= 1.6.0"
 $coreUserConfiguration = File.join(File.dirname(__FILE__), "userdata.yml")
 $configurationVariables = File.join(File.dirname(__FILE__), "vagrantconfiguration.rb")
 
+if File.exist?($configurationVariables)
+	require $configurationVariables
+end
+
 Vagrant.configure("2") do |config|
 end
