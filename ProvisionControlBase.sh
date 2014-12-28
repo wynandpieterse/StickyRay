@@ -23,28 +23,6 @@
 # 
 # Version 0.0.3
 #
+#!/bin/bash
 
-$enableSerialLogging = false
-
-$virtualBoxGUI = false
-$virtualBoxCPUs = 1
-$virtualBoxMemory = 1024
-
-$numberOfCoreInstances = 3
-$coreUpdateChannel = 'alpha'
-$exposeDocker = true
-$exposedDockerPort = 2375
-
-if File.exists?('userdata.yml') && ARGV[0].eql?('up')
-	require 'open-uri'
-	require 'yaml'
-
-	token = open('https://discovery.etcd.io/new').read
-
-	data = YAML.load(IO.readlines('userdata.yml')[1..-1].join)
-	data['coreos']['etcd']['discovery'] = token
-
-	yaml = YAML.dump(data)
-
-	File.open('userdata.yml', 'w') { |file| file.write("#{yaml}") }
-end
+apt-get update
