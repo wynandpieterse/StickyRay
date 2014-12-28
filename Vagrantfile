@@ -36,6 +36,8 @@ if File.exist?($configurationVariables)
 end
 
 Vagrant.configure("2") do |config|
+	config.ssh.insert_key = true
+
 	(1..$numberOfCoreInstances).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
