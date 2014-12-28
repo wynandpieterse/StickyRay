@@ -24,3 +24,27 @@
 # Version 0.0.3
 #
 #!/bin/bash
+
+cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
+chmod 400 ~/.ssh/VagrantPrivateKey
+
+cat > /home/vagrant/.ansible.cfg << EOF
+[defaults]
+host_key_checking = False
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s -F /home/vagrant/.ssh.cfg
+EOF
+
+for (( i = 1; i <= $1; i++ ))
+do
+	printf 'Host 10.10.10.1%s' '$1' >> /home/vagrant/.ssh.cfg
+	printf '   User core' >> /home/vagrant/.ssh.cfg
+	printf '   UserKnownHostsFile /dev/null' >> /home/vagrant/.ssh.cfg
+	printf '   StrictHostKeyChecking no' >> /home/vagrant/.ssh.cfg
+	printf '   PasswordAuthentication no' >> /home/vagrant/.ssh.cfg
+	printf '   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey' >> /home/vagrant/.ssh.cfg
+	printf '   IdentitiesOnly yes' >> /home/vagrant/.ssh.cfg
+	printf '   LogLevel FATAL' >> /home/vagrant/.ssh.cfg
+	printf ' ' >> /home/vagrant/.ssh.cfg
+done
