@@ -27,7 +27,7 @@
 
 cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
 chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
-chown vagrant:vagrant VagrantPrivateKey
+chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
 
 cat > /home/vagrant/.ansible.cfg << EOF
 [defaults]
