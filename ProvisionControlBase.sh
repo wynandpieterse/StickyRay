@@ -26,3 +26,5 @@
 #
 
 apt-get update
+
+apt-get install dos2unix -y
