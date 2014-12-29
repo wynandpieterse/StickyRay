@@ -25,11 +25,11 @@
 # Version 0.0.4
 #
 
-cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
-chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
-chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
+sudo cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
+sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
+sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
 
-cat > /home/vagrant/.ansible.cfg << EOF
+cat > /tmp/.ansible.cfg << EOF
 [defaults]
 host_key_checking = False
 
@@ -37,7 +37,7 @@ host_key_checking = False
 ssh_args = -o ControlMaster=auto -o ControlPersist=60s -F /home/vagrant/.ssh.cfg
 EOF
 
-cat > /home/vagrant/.ssh.cfg << EOF
+cat > /tmp/.ssh.cfg << EOF
 Host *
    User core
    UserKnownHostsFile /dev/null
@@ -48,3 +48,6 @@ Host *
    LogLevel FATAL
 
 EOF
+
+sudo cp /tmp/.ansible.cfg /home/vagrant/.ansible.cfg
+sudo cp /tmp/.ssh.cfg /home/vagrant/.ssh.cfg
