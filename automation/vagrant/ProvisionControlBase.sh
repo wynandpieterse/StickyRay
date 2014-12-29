@@ -29,8 +29,8 @@ sudo apt-get update
 
 sudo apt-get install dos2unix -y
 
-sudo dos2unix /vagrant/LocalInventory.rb
-sudo dos2unix /vagrant/ProvisionControlSSH.sh
-sudo dos2unix /vagrant/ProvisionControlAnsible.sh
-sudo dos2unix /vagrant/ProvisionControlDocker.sh
-sudo dos2unix /vagrant/ProvisionControlRegistry.sh
+sudo dos2unix /vagrant/automation/LocalInventory.rb
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlSSH.sh
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlAnsible.sh
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlDocker.sh
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlRegistry.sh
