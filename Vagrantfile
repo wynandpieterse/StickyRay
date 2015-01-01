@@ -31,9 +31,7 @@ Vagrant.require_version ">= 1.6.0"
 $coreUserConfiguration = File.join(File.dirname(__FILE__), "automation/vagrant/UserData.yml")
 $configurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/VagrantConfiguration.rb")
 
-if File.exist?($configurationVariables)
-	require $configurationVariables
-end
+require $configurationVariables
 
 Vagrant.configure("2") do |config|
 	config.ssh.insert_key = true
