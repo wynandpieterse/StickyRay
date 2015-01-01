@@ -25,7 +25,7 @@
 # Version 0.0.4
 #
 
-sudo apt-get install ansible -y
+sudo apt-get install ansible -y -o Dpkg::Options::="--force-confnew"
 
 ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles
 ansible-playbook /vagrant/automation/Bootstrap.yml
