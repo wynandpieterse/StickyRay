@@ -26,7 +26,7 @@
 
 - name: Create Docker registry data folder
   file:
-    path: {{ docker_registry_host_path }}
+    path: "{{ docker_registry_host_path }}"
     state: directory
 
 - name: Install and run a Docker registry

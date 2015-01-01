@@ -27,9 +27,9 @@
 - name: Bootstrap control machine to have Docker Registry
   hosts: control
   vars:
-  	docker_registry_host_path: /vagrant/intermediate/docker/control/registry
-  	docker_registry_container_path: /registry
-  	docker_registry_port: 5000
-  	docker_settings_flavor: local
+    docker_registry_host_path: /vagrant/intermediate/docker/control/registry
+    docker_registry_container_path: /registry
+    docker_registry_port: 5000
+    docker_settings_flavor: local
   roles:
     - stickyray.docker-registry
