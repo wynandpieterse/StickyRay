@@ -25,6 +25,8 @@
 # Version 0.0.4
 #
 
+echo "Building Ansible configuration file"
+
 cat > /tmp/.ansible.cfg << EOF
 [defaults]
 host_key_checking = False
@@ -32,6 +34,8 @@ host_key_checking = False
 [ssh_connection]
 ssh_args = -o ControlMaster=auto -o ControlPersist=60s -F /home/vagrant/.ssh.cfg
 EOF
+
+echo "Building Ansible SSH configuration file"
 
 cat > /tmp/.ssh.cfg << EOF
 Host *
@@ -45,13 +49,19 @@ Host *
 
 EOF
 
-sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
-sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
-sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
+echo "Copying over Vagrant private key"
 
-sudo mkdir /etc/ansible
-sudo cp /vagrant/automation/LocalInventory /etc/ansible/hosts
-sudo chmod 666 /etc/ansible/hosts
+sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey >> /dev/null
+sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey >> /dev/null
+sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey >> /dev/null
 
-sudo cp /tmp/.ansible.cfg /home/vagrant/.ansible.cfg
-sudo cp /tmp/.ssh.cfg /home/vagrant/.ssh.cfg
+echo "Building default Ansible host file for local development"
+
+sudo mkdir /etc/ansible >> /dev/null
+sudo cp /vagrant/automation/LocalInventory /etc/ansible/hosts >> /dev/null
+sudo chmod 666 /etc/ansible/hosts >> /dev/null
+
+echo "Copying Ansible configuration files to correct location"
+
+sudo cp /tmp/.ansible.cfg /home/vagrant/.ansible.cfg >> /dev/null
+sudo cp /tmp/.ssh.cfg /home/vagrant/.ssh.cfg >> /dev/null

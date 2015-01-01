@@ -25,12 +25,18 @@
 # Version 0.0.4
 #
 
-sudo apt-get update
+echo "Updating package list"
 
-sudo apt-get install dos2unix -y
+sudo apt-get update >> /dev/null
 
-sudo dos2unix /vagrant/automation/LocalInventory
-sudo dos2unix /vagrant/automation/vagrant/ProvisionControlFiles.sh
-sudo dos2unix /vagrant/automation/vagrant/ProvisionControlAnsible.sh
-sudo dos2unix /vagrant/automation/vagrant/ProvisionControlDocker.sh
-sudo dos2unix /vagrant/automation/vagrant/ProvisionControlRegistry.sh
+echo "Installing dos2unix utility"
+
+sudo apt-get install dos2unix -y >> /dev/null
+
+echo "Converting files to correct format for Linux"
+
+sudo dos2unix /vagrant/automation/LocalInventory >> /dev/null
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlFiles.sh >> /dev/null
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlAnsible.sh >> /dev/null
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlDocker.sh >> /dev/null
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlRegistry.sh >> /dev/null

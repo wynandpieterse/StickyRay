@@ -25,7 +25,14 @@
 # Version 0.0.4
 #
 
-sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold"
+echo "Installing Ansible"
 
-ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles
+sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" >> /dev/null
+
+echo "Downloading CoreOS bootstrap packages"
+
+ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles >> /dev/null
+
+echo "Updating CoreOS installation to have Python"
+
 ansible-playbook /vagrant/automation/Bootstrap.yml
