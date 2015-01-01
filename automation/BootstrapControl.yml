@@ -24,6 +24,8 @@
 # Version 0.0.4
 #
 
-- name: Install Docker on control machine
-  sudo: yes
-  apt: name=docker.io state=present
+- hosts: 127.0.0.1
+  connection: local
+  roles:
+    - stickyray.docker
+    - stickyray.docker-registry
