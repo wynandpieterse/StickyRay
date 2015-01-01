@@ -25,6 +25,15 @@
 # Version 0.0.4
 #
 
+echo "Building system host file"
+
+printf "127.0.0.1 localhost\n" >> /tmp/systemhosts
+
+for (( instance = 1; instance <= $1; instance++ ))
+do
+	printf "10.10.10.1%i core0%i\n" "$instance" "$instance" >> /tmp/systemhosts
+done
+
 echo "Building Ansible configuration file"
 
 cat > /tmp/.ansible.cfg << EOF

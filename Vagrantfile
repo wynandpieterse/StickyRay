@@ -37,8 +37,8 @@ if $numberOfCoreMachines < 1
 	raise 'The number of CoreOS machines cant be less than 1'
 end
 
-if $numberOfCoreMachines > 9
-	raise 'The number of CoreOS machines cant be more than 9'
+if $numberOfCoreMachines > 8
+	raise 'The number of CoreOS machines cant be more than 8'
 end
 
 Vagrant.configure("2") do |config|
