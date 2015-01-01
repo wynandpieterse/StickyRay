@@ -25,13 +25,6 @@
 # Version 0.0.4
 #
 
-sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
-sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
-sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
-
-sudo cp /vagrant/automation/LocalInventory /etc/ansible/hosts
-sudo chmod 666 /etc/ansible/hosts
-
 cat > /tmp/.ansible.cfg << EOF
 [defaults]
 host_key_checking = False
@@ -51,6 +44,13 @@ Host *
    LogLevel FATAL
 
 EOF
+
+sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
+sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
+sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
+
+sudo cp /vagrant/automation/LocalInventory /etc/ansible/hosts
+sudo chmod 666 /etc/ansible/hosts
 
 sudo cp /tmp/.ansible.cfg /home/vagrant/.ansible.cfg
 sudo cp /tmp/.ssh.cfg /home/vagrant/.ssh.cfg

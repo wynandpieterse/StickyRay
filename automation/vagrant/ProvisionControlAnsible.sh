@@ -28,4 +28,4 @@
 sudo apt-get install ansible -y
 
 ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles
-ansible-playbook -i /vagrant/automation/LocalInventory.rb /vagrant/automation/Bootstrap.yml
+ansible-playbook /vagrant/automation/Bootstrap.yml
