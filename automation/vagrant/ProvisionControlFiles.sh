@@ -39,7 +39,7 @@ echo "Building Ansible SSH configuration file"
 
 for (( instance = 1; instance <= $1; instance++ ))
 do
-	printf "Host 10.10.10.1%i\n" instance >> /tmp/.ssh.cfg
+	printf "Host 10.10.10.1%i\n" "$instance" >> /tmp/.ssh.cfg
 	printf "   User core\n" >> /tmp/.ssh.cfg
 	printf "   UserKnownHostsFile /dev/null\n" >> /tmp/.ssh.cfg
 	printf "   StrictHostKeyChecking no\n" >> /tmp/.ssh.cfg
@@ -56,7 +56,7 @@ printf "localhost ansible_connection=local\n" >> /tmp/hosts
 
 for (( instance = 1; instance <= $1; instance++ ))
 do
-	printf "core0%i ansible_connection=ssh ansible_ssh_host=10.10.10.1%i ansible_python_interpreter=\"PATH=/home/core/bin:$PATH python\"\n" instance instance >> /tmp/hosts
+	printf "core0%i ansible_connection=ssh ansible_ssh_host=10.10.10.1%i ansible_python_interpreter=\"PATH=/home/core/bin:$PATH python\"\n" "$instance" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts
@@ -72,7 +72,7 @@ printf "\n" >> /tmp/hosts
 printf "[core]\n" >> /tmp/hosts
 for (( instance = 1; instance <= $1; instance++ ))
 do
-	printf "core0%i\n" instance >> /tmp/hosts
+	printf "core0%i\n" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts
@@ -80,7 +80,7 @@ printf "\n" >> /tmp/hosts
 printf "[web]\n" >> /tmp/hosts
 for (( instance = 1; instance <= $1; instance++ ))
 do
-	printf "core0%i\n" instance >> /tmp/hosts
+	printf "core0%i\n" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts
@@ -88,7 +88,7 @@ printf "\n" >> /tmp/hosts
 printf "[database]\n" >> /tmp/hosts
 for (( instance = 1; instance <= $1; instance++ ))
 do
-	printf "core0%i\n" instance >> /tmp/hosts
+	printf "core0%i\n" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts
@@ -96,7 +96,7 @@ printf "\n" >> /tmp/hosts
 printf "[monitor]\n" >> /tmp/hosts
 for (( instance = 1; instance <= $1; instance++ ))
 do
-	printf "core0%i\n" instance >> /tmp/hosts
+	printf "core0%i\n" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts
