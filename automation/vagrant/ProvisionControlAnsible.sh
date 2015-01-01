@@ -27,11 +27,11 @@
 
 echo "Installing Ansible"
 
-sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" >> /dev/null
+sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" > /dev/null 2>&1
 
 echo "Downloading CoreOS bootstrap packages"
 
-ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles >> /dev/null
+ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles > /dev/null 2>&1
 
 echo "Updating CoreOS installation to have Python"
 
