@@ -82,26 +82,6 @@ Vagrant.configure("2") do |config|
 				core.vbguest.auto_update = false
 			end
 
-			if $enableSerialLogging
-				logdir = File.join(File.dirname(__FILE__), "intermediate/vagrant/serial/%s/" % vmName)
-				FileUtils.mkdir_p(logdir)
-
-				serialFile = File.join(logdir, "%s.log" % Time.now.strftime("%d_%m_%y_%H_%M"))
-				FileUtils.touch(serialFile)
-
-				config.vm.provider :vmware_fusion do |v, override|
-					v.vmx["serial0.present"] = "TRUE"
-					v.vmx["serial0.fileType"] = "file"
-					v.vmx["serial0.fileName"] = serialFile
-					v.vmx["serial0.tryNoRxLoss"] = "FALSE"
-				end
-
-				config.vm.provider :virtualbox do |vb, override|
-					vb.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
-					vb.customize ["modifyvm", :id, "--uartmode1", serialFile]
-				end
-			end
-
 			if $exposeDocker
 				core.vm.network "forwarded_port", guest: 2375, host: ($exposedDockerPort + instanceID - 1), auto_correct: true
 			end
@@ -113,31 +93,11 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	config.vm.define vmName = "control" do |control|
+	config.vm.define do |control|
 		control.vm.hostname = "control"
 		control.vm.box = "https://cloud-images.ubuntu.com/vagrant/utopic/current/utopic-server-cloudimg-amd64-vagrant-disk1.box"
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
-
-		if $enableSerialLogging
-			logdir = File.join(File.dirname(__FILE__), "intermediate/vagrant/serial/%s/" % vmName)
-			FileUtils.mkdir_p(logdir)
-
-			serialFile = File.join(logdir, "%s.log" % Time.now.strftime("%d_%m_%y_%H_%M"))
-			FileUtils.touch(serialFile)
-
-			config.vm.provider :vmware_fusion do |v, override|
-				v.vmx["serial0.present"] = "TRUE"
-				v.vmx["serial0.fileType"] = "file"
-				v.vmx["serial0.fileName"] = serialFile
-				v.vmx["serial0.tryNoRxLoss"] = "FALSE"
-			end
-
-			config.vm.provider :virtualbox do |vb, override|
-				vb.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
-				vb.customize ["modifyvm", :id, "--uartmode1", serialFile]
-			end
-		end
 
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => $numberOfCoreMachines
