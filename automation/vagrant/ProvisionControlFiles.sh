@@ -37,17 +37,18 @@ EOF
 
 echo "Building Ansible SSH configuration file"
 
-cat > /tmp/.ssh.cfg << EOF
-Host *
-   User core
-   UserKnownHostsFile /dev/null
-   StrictHostKeyChecking no
-   PasswordAuthentication no
-   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey
-   IdentitiesOnly yes
-   LogLevel FATAL
-
-EOF
+for (( instance = 1; instance <= $1; instance++ ))
+do
+	printf "Host 10.10.10.1%i" instance >> /tmp/.ssh.cfg
+	printf "   User core" >> /tmp/.ssh.cfg
+	printf "   UserKnownHostsFile /dev/null" >> /tmp/.ssh.cfg
+	printf "   StrictHostKeyChecking no" >> /tmp/.ssh.cfg
+	printf "   PasswordAutehntication no" >> /tmp/.ssh.cfg
+	printf "   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey" >> /tmp/.ssh.cfg
+	printf "   IdentitiesOnly yes" >> /tmp/.ssh.cfg
+	printf "   LogLevel FATAL" >> /tmp/.ssh.cfg
+	printf " " >> /tmp/.ssh.cfg
+done
 
 echo "Copying over Vagrant private key"
 
