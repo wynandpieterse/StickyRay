@@ -25,7 +25,8 @@
 # Version 0.0.4
 #
 
-ln -s /vagrant/automation/LocalInventory /home/vagrant/LocalInventory
+cp /vagrant/automation/LocalInventory /home/vagrant/LocalInventory
+chmod 666 /home/vagrant/LocalInventory
 
 sudo apt-get install ansible -y
 
