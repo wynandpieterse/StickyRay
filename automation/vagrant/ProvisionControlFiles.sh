@@ -49,6 +49,7 @@ sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/Vagrant
 sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
 sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
 
+sudo mkdir /etc/ansible
 sudo cp /vagrant/automation/LocalInventory /etc/ansible/hosts
 sudo chmod 666 /etc/ansible/hosts
 
