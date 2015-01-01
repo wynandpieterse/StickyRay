@@ -1,4 +1,3 @@
-#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -22,10 +21,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.4
+# Version 0.0.5
 #
 
-apt-get install ansible -y
+$virtualBoxGUI = false
+$virtualBoxCPUs = 1
+$virtualBoxMemory = 1024
 
-ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/roles --force
-ansible-playbook -i /vagrant/LocalInventory.rb /vagrant/Bootstrap.yml
+# This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
+$numberOfCoreMachines = 1
+$coreUpdateChannel = 'alpha'
+$exposeDocker = true
+$exposedDockerPort = 2375

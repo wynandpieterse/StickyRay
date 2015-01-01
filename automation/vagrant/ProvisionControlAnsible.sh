@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -21,29 +22,17 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.4
+# Version 0.0.5
 #
 
-$enableSerialLogging = false
+echo "Installing Ansible"
 
-$virtualBoxGUI = false
-$virtualBoxCPUs = 1
-$virtualBoxMemory = 1024
+sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" > /dev/null 2>&1
 
-$coreUpdateChannel = 'alpha'
-$exposeDocker = true
-$exposedDockerPort = 2375
+echo "Downloading CoreOS bootstrap packages"
 
-if File.exists?('UserData.yml') && ARGV[0].eql?('up')
-	require 'open-uri'
-	require 'yaml'
+ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles > /dev/null 2>&1
 
-	token = open('https://discovery.etcd.io/new').read
+echo "Updating CoreOS installation to have Python"
 
-	data = YAML.load(IO.readlines('UserData.yml')[1..-1].join)
-	data['coreos']['etcd']['discovery'] = token
-
-	yaml = YAML.dump(data)
-
-	File.open('UserData.yml', 'w') { |file| file.write("#{yaml}") }
-end
+ansible-playbook /vagrant/automation/Bootstrap.yml > /dev/null 2>&1

@@ -21,44 +21,44 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.4
+# Version 0.0.5
 #
 
 require 'fileutils'
 
 Vagrant.require_version ">= 1.6.0"
 
-$coreUserConfiguration = File.join(File.dirname(__FILE__), "UserData.yml")
-$configurationVariables = File.join(File.dirname(__FILE__), "VagrantConfiguration.rb")
+$coreUserConfiguration = File.join(File.dirname(__FILE__), "automation/vagrant/UserData.yml")
+$configurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/VagrantConfiguration.rb")
 
-if File.exist?($configurationVariables)
-	require $configurationVariables
+require $configurationVariables
+
+if $numberOfCoreMachines < 1
+	raise 'The number of CoreOS machines cant be less than 1'
+end
+
+if $numberOfCoreMachines > 8
+	raise 'The number of CoreOS machines cant be more than 8'
+end
+
+if File.exists?('UserData.yml') && ARGV[0].eql?('up')
+	require 'open-uri'
+	require 'yaml'
+
+	token = open('https://discovery.etcd.io/new').read
+
+	data = YAML.load(IO.readlines('UserData.yml')[1..-1].join)
+	data['coreos']['etcd']['discovery'] = token
+
+	yaml = YAML.dump(data)
+
+	File.open('UserData.yml', 'w') { |file| file.write("#{yaml}") }
 end
 
 Vagrant.configure("2") do |config|
 	config.ssh.insert_key = true
 
-	if $enableSerialLogging
-		logdir = File.join(File.dirname(__FILE__), "logs/vagrant/serial/")
-		FileUtils.mkdir_p(logdir)
-
-		serialFile = File.join(logdir, "%s.log" % vm_name)
-		FileUtils.touch(serialFile)
-
-		config.vm.provider :vmware_fusion do |v, override|
-			v.vmx["serial0.present"] = "TRUE"
-			v.vmx["serial0.fileType"] = "file"
-			v.vmx["serial0.fileName"] = serialFile
-			v.vmx["serial0.tryNoRxLoss"] = "FALSE"
-		end
-
-		config.vm.provider :virtualbox do |vb, override|
-			vb.customize ["modifyvm", :id, "--uart1", "0x3F8", "4"]
-			vb.customize ["modifyvm", :id, "--uartmode1", serialFile]
-		end
-	end
-
-	(1..3).each do |instanceID|
+	(1..$numberOfCoreMachines).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
 			core.vm.box = "coreos-%s" % $coreUpdateChannel
@@ -93,16 +93,16 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	config.vm.define "control" do |control|
+	config.vm.define do |control|
 		control.vm.hostname = "control"
 		control.vm.box = "https://cloud-images.ubuntu.com/vagrant/utopic/current/utopic-server-cloudimg-amd64-vagrant-disk1.box"
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
-		control.vm.provision :shell, :path => "ProvisionControlBase.sh", :privileged => true
-		control.vm.provision :shell, :path => "ProvisionControlSSH.sh", :privileged => true
-		control.vm.provision :shell, :path => "ProvisionControlAnsible.sh", :privileged => true
-		control.vm.provision :shell, :path => "ProvisionControlDocker.sh", :privileged => true
-		control.vm.provision :shell, :path => "ProvisionControlRegistry.sh", :privileged => true
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => $numberOfCoreMachines
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false
 	end
 end

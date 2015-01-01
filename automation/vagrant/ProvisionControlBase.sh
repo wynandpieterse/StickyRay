@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -24,8 +25,17 @@
 # Version 0.0.5
 #
 
-# Standard Ignores
-[Ii]ntermediate/
+echo "Updating package list"
 
-# Vagrant Ignores
-.[Vv]agrant/
+sudo apt-get update > /dev/null 2>&1
+
+echo "Installing dos2unix utility"
+
+sudo apt-get install dos2unix -y > /dev/null 2>&1
+
+echo "Converting files to correct format for Linux"
+
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlFiles.sh > /dev/null 2>&1
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlAnsible.sh > /dev/null 2>&1
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlDocker.sh > /dev/null 2>&1
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlRegistry.sh > /dev/null 2>&1

@@ -1,4 +1,4 @@
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -21,11 +21,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.4
+# Version 0.0.5
 #
 
-- name: Bootstrap CoreOS hosts
-  hosts: core
-  gather_facts: false
-  roles:
-    - defunctzombie.coreos-bootstrap
+- name: Create Docker registry data folder
+  file:
+    path: /vagrant/intermediate/docker/control/registry
+    state: directory
+
+- name: Install & run a Docker registry
+  raw: docker run -d -p 5000:5000 -e SETTINGS_FLAVOR=local -e STORAGE_PATH=/registry -v /vagrant/intermediate/docker/control/registry:/registry registry
