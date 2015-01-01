@@ -24,28 +24,12 @@
 # Version 0.0.4
 #
 
-$enableSerialLogging = false
-
 $virtualBoxGUI = false
 $virtualBoxCPUs = 1
 $virtualBoxMemory = 1024
 
 # This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
-$numberOfCoreMachines = 3
+$numberOfCoreMachines = 1
 $coreUpdateChannel = 'alpha'
 $exposeDocker = true
 $exposedDockerPort = 2375
-
-if File.exists?('UserData.yml') && ARGV[0].eql?('up')
-	require 'open-uri'
-	require 'yaml'
-
-	token = open('https://discovery.etcd.io/new').read
-
-	data = YAML.load(IO.readlines('UserData.yml')[1..-1].join)
-	data['coreos']['etcd']['discovery'] = token
-
-	yaml = YAML.dump(data)
-
-	File.open('UserData.yml', 'w') { |file| file.write("#{yaml}") }
-end
