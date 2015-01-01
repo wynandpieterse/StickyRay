@@ -33,6 +33,10 @@ echo "Downloading CoreOS bootstrap packages"
 
 ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles > /dev/null 2>&1
 
+echo "Converting files to Linux line endings"
+
+find /vagrant/automation/roles/defunctzombie.coreos-bootstrap -type f -exec dos2unix {} \; > /dev/null 2>&1
+
 echo "Updating CoreOS installation to have Python"
 
 ansible-playbook /vagrant/automation/Bootstrap.yml > /dev/null 2>&1

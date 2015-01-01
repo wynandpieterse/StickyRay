@@ -29,7 +29,7 @@ $virtualBoxCPUs = 1
 $virtualBoxMemory = 1024
 
 # This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
-$numberOfCoreMachines = 1
+$numberOfCoreMachines = 3
 $coreUpdateChannel = 'alpha'
 $exposeDocker = true
 $exposedDockerPort = 2375
