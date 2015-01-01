@@ -24,3 +24,7 @@
 # 
 # Version 0.0.5
 #
+
+echo "Updating control machine to have Docker registry"
+
+ansible-playbook /vagrant/automation/BootstrapControlDockerRegistry.yml
