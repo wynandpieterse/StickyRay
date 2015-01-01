@@ -25,7 +25,7 @@
 # Version 0.0.4
 #
 
-sudo cp /vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
+sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey
 sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
 sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
 

@@ -1,5 +1,4 @@
-#!/bin/bash
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -25,7 +24,6 @@
 # Version 0.0.4
 #
 
-sudo apt-get install ansible -y
-
-ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/roles
-ansible-playbook -i /vagrant/LocalInventory.rb /vagrant/Bootstrap.yml
+- name: Install Docker on control machine
+  sudo: yes
+  apt: name=docker.io state=present

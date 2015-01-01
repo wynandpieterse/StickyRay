@@ -1,5 +1,4 @@
-#!/bin/bash
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -25,12 +24,10 @@
 # Version 0.0.4
 #
 
-sudo apt-get update
+- name: Create Docker registry data folder
+  file:
+    path: /vagrant/intermediate/docker/control/registry
+    state: directory
 
-sudo apt-get install dos2unix -y
-
-sudo dos2unix /vagrant/LocalInventory.rb
-sudo dos2unix /vagrant/ProvisionControlSSH.sh
-sudo dos2unix /vagrant/ProvisionControlAnsible.sh
-sudo dos2unix /vagrant/ProvisionControlDocker.sh
-sudo dos2unix /vagrant/ProvisionControlRegistry.sh
+- name: Install & run a Docker registry
+  raw: docker run -d -p 5000:5000 -e SETTINGS_FLAVOR=local -e STORAGE_PATH=/registry -v /vagrant/intermediate/docker/control/registry:/registry registry

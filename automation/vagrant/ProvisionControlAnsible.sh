@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -21,11 +22,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.3
+# Version 0.0.4
 #
 
-# Standard Ignores
-[Ii]ntermediate/
+sudo apt-get install ansible -y
 
-# Vagrant Ignores
-.[Vv]agrant/
+ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles
+ansible-playbook -i /vagrant/automation/LocalInventory.rb /vagrant/automation/Bootstrap.yml

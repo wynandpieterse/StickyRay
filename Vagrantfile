@@ -28,8 +28,8 @@ require 'fileutils'
 
 Vagrant.require_version ">= 1.6.0"
 
-$coreUserConfiguration = File.join(File.dirname(__FILE__), "UserData.yml")
-$configurationVariables = File.join(File.dirname(__FILE__), "VagrantConfiguration.rb")
+$coreUserConfiguration = File.join(File.dirname(__FILE__), "automation/vagrant/UserData.yml")
+$configurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/VagrantConfiguration.rb")
 
 if File.exist?($configurationVariables)
 	require $configurationVariables
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
 	config.ssh.insert_key = true
 
 	if $enableSerialLogging
-		logdir = File.join(File.dirname(__FILE__), "logs/vagrant/serial/")
+		logdir = File.join(File.dirname(__FILE__), "intermediate/logs/vagrant/serial/")
 		FileUtils.mkdir_p(logdir)
 
 		serialFile = File.join(logdir, "%s.log" % vm_name)
@@ -99,10 +99,10 @@ Vagrant.configure("2") do |config|
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
-		control.vm.provision :shell, :path => "ProvisionControlBase.sh", :privileged => false
-		control.vm.provision :shell, :path => "ProvisionControlSSH.sh", :privileged => false
-		control.vm.provision :shell, :path => "ProvisionControlAnsible.sh", :privileged => false
-		control.vm.provision :shell, :path => "ProvisionControlDocker.sh", :privileged => false
-		control.vm.provision :shell, :path => "ProvisionControlRegistry.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlSSH.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false
 	end
 end

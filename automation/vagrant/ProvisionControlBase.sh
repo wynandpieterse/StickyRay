@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -21,11 +22,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.3
+# Version 0.0.4
 #
 
-# Standard Ignores
-[Ii]ntermediate/
+sudo apt-get update
 
-# Vagrant Ignores
-.[Vv]agrant/
+sudo apt-get install dos2unix -y
+
+sudo dos2unix /vagrant/automation/LocalInventory.rb
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlSSH.sh
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlAnsible.sh
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlDocker.sh
+sudo dos2unix /vagrant/automation/vagrant/ProvisionControlRegistry.sh
