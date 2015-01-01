@@ -31,8 +31,14 @@ Vagrant.require_version ">= 1.6.0"
 $coreUserConfiguration = File.join(File.dirname(__FILE__), "automation/vagrant/UserData.yml")
 $configurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/VagrantConfiguration.rb")
 
-if File.exist?($configurationVariables)
-	require $configurationVariables
+require $configurationVariables
+
+if $numberOfCoreMachines < 1
+	raise 'The number of CoreOS machines cant be less than 1'
+end
+
+if $numberOfCoreMachines > 8
+	raise 'The number of CoreOS machines cant be more than 8'
 end
 
 Vagrant.configure("2") do |config|
@@ -58,7 +64,7 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	(1..3).each do |instanceID|
+	(1..$numberOfCoreMachines).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
 			core.vm.box = "coreos-%s" % $coreUpdateChannel
@@ -100,7 +106,7 @@ Vagrant.configure("2") do |config|
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => $numberOfCoreMachines
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false

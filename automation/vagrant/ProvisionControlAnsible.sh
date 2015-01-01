@@ -35,4 +35,4 @@ ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/rol
 
 echo "Updating CoreOS installation to have Python"
 
-ansible-playbook /vagrant/automation/Bootstrap.yml
+ansible-playbook /vagrant/automation/Bootstrap.yml > /dev/null 2>&1

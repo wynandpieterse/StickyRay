@@ -35,7 +35,6 @@ sudo apt-get install dos2unix -y > /dev/null 2>&1
 
 echo "Converting files to correct format for Linux"
 
-sudo dos2unix /vagrant/automation/LocalInventory > /dev/null 2>&1
 sudo dos2unix /vagrant/automation/vagrant/ProvisionControlFiles.sh > /dev/null 2>&1
 sudo dos2unix /vagrant/automation/vagrant/ProvisionControlAnsible.sh > /dev/null 2>&1
 sudo dos2unix /vagrant/automation/vagrant/ProvisionControlDocker.sh > /dev/null 2>&1
