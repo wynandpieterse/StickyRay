@@ -25,6 +25,8 @@
 # Version 0.0.4
 #
 
+ln -s /vagrant/automation/LocalInventory /home/vagrant/LocalInventory
+
 sudo apt-get install ansible -y
 
 ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles
