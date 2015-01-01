@@ -33,6 +33,14 @@ $configurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/
 
 require $configurationVariables
 
+if $numberOfCoreMachines < 1
+	raise 'The number of CoreOS machines cant be less than 1'
+end
+
+if $numberOfCoreMachines > 9
+	raise 'The number of CoreOS machines cant be more than 9'
+end
+
 Vagrant.configure("2") do |config|
 	config.ssh.insert_key = true
 
