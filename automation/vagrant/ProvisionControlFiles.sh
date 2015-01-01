@@ -43,7 +43,7 @@ do
 	printf "   User core\n" >> /tmp/.ssh.cfg
 	printf "   UserKnownHostsFile /dev/null\n" >> /tmp/.ssh.cfg
 	printf "   StrictHostKeyChecking no\n" >> /tmp/.ssh.cfg
-	printf "   PasswordAutehntication no\n" >> /tmp/.ssh.cfg
+	printf "   PasswordAuthentication no\n" >> /tmp/.ssh.cfg
 	printf "   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey\n" >> /tmp/.ssh.cfg
 	printf "   IdentitiesOnly yes\n" >> /tmp/.ssh.cfg
 	printf "   LogLevel FATAL\n" >> /tmp/.ssh.cfg
