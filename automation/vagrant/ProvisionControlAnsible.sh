@@ -25,9 +25,6 @@
 # Version 0.0.4
 #
 
-cp /vagrant/automation/LocalInventory /etc/ansible/hosts
-chmod 666 /etc/ansible/hosts
-
 sudo apt-get install ansible -y
 
 ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles

@@ -29,6 +29,9 @@ sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/Vagrant
 sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey
 sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey
 
+cp /vagrant/automation/LocalInventory /etc/ansible/hosts
+chmod 666 /etc/ansible/hosts
+
 cat > /tmp/.ansible.cfg << EOF
 [defaults]
 host_key_checking = False

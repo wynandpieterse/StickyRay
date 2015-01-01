@@ -100,7 +100,7 @@ Vagrant.configure("2") do |config|
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlSSH.sh", :privileged => false
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false
