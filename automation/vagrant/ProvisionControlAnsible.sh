@@ -39,4 +39,4 @@ find /vagrant/automation/roles/defunctzombie.coreos-bootstrap -type f -exec dos2
 
 echo "Updating CoreOS installation to have Python"
 
-ansible-playbook /vagrant/automation/Bootstrap.yml > /dev/null 2>&1
+ansible-playbook /vagrant/automation/BootstrapCore.yml > /dev/null 2>&1
