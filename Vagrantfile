@@ -69,10 +69,10 @@ Vagrant.configure("2") do |config|
 			end
 
 			if $enableSerialLogging
-				logdir = File.join(File.dirname(__FILE__), "intermediate/logs/vagrant/serial/")
+				logdir = File.join(File.dirname(__FILE__), "intermediate/vagrant/serial/%s/" % vmName)
 				FileUtils.mkdir_p(logdir)
 
-				serialFile = File.join(logdir, "%s.log" % vm_name)
+				serialFile = File.join(logdir, "%s.log" % Time.now.strftime("%d_%m_%y_%H_%M"))
 				FileUtils.touch(serialFile)
 
 				config.vm.provider :vmware_fusion do |v, override|
@@ -106,10 +106,10 @@ Vagrant.configure("2") do |config|
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
 		if $enableSerialLogging
-			logdir = File.join(File.dirname(__FILE__), "intermediate/logs/vagrant/serial/")
+			logdir = File.join(File.dirname(__FILE__), "intermediate/vagrant/serial/%s/" % vmName)
 			FileUtils.mkdir_p(logdir)
 
-			serialFile = File.join(logdir, "%s.log" % vm_name)
+			serialFile = File.join(logdir, "%s.log" % Time.now.strftime("%d_%m_%y_%H_%M"))
 			FileUtils.touch(serialFile)
 
 			config.vm.provider :vmware_fusion do |v, override|
