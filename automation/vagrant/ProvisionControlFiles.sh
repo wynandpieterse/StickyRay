@@ -59,6 +59,19 @@ do
 	printf "\n" >> /tmp/.ssh.cfg
 done
 
+for (( instance = 1; instance <= $1; instance++ ))
+do
+	printf "Host core0%i\n" "$instance" >> /tmp/.ssh.cfg
+	printf "   User core\n" >> /tmp/.ssh.cfg
+	printf "   UserKnownHostsFile /dev/null\n" >> /tmp/.ssh.cfg
+	printf "   StrictHostKeyChecking no\n" >> /tmp/.ssh.cfg
+	printf "   PasswordAuthentication no\n" >> /tmp/.ssh.cfg
+	printf "   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey\n" >> /tmp/.ssh.cfg
+	printf "   IdentitiesOnly yes\n" >> /tmp/.ssh.cfg
+	printf "   LogLevel FATAL\n" >> /tmp/.ssh.cfg
+	printf "\n" >> /tmp/.ssh.cfg
+done
+
 echo "Building default Ansible host file for local development"
 
 printf "localhost ansible_connection=local\n" >> /tmp/hosts
@@ -109,6 +122,12 @@ do
 done
 
 printf "\n" >> /tmp/hosts
+
+echo "Copying built system hosts file"
+
+sudo cp /tmp/systemhosts /etc/hosts
+
+echo "Copying Ansible host file"
 
 sudo mkdir /etc/ansible > /dev/null 2>&1
 sudo cp /tmp/hosts /etc/ansible/hosts > /dev/null 2>&1
