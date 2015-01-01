@@ -93,7 +93,7 @@ Vagrant.configure("2") do |config|
 		end
 	end
 
-	config.vm.define "control" do |control|
+	config.vm.define "control", primary: true do |control|
 		control.vm.hostname = "control"
 		control.vm.box = "https://cloud-images.ubuntu.com/vagrant/utopic/current/utopic-server-cloudimg-amd64-vagrant-disk1.box"
 		control.vm.network :private_network, ip: "10.10.10.10"
