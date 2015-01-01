@@ -24,8 +24,13 @@
 # Version 0.0.5
 #
 
-- hosts: 127.0.0.1
-  connection: local
+- name: Bootstrap control machine to have Docker Registry
+  hosts: control
+  sudo: true
+  vars:
+    docker_registry_host_path: /vagrant/intermediate/docker/control/registry
+    docker_registry_container_path: /registry
+    docker_registry_port: 5000
+    docker_settings_flavor: local
   roles:
-    - stickyray.docker
     - stickyray.docker-registry
