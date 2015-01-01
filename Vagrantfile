@@ -58,6 +58,12 @@ end
 Vagrant.configure("2") do |config|
 	config.ssh.insert_key = true
 
+	config.vm.provider :virtualbox do |vb|
+		vb.gui = $virtualBoxGUI
+		vb.memory = $virtualBoxMemory
+		vb.cpus = $virtualBoxCPUs
+	end
+
 	(1..$numberOfCoreMachines).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
