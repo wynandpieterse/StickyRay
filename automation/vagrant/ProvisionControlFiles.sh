@@ -39,28 +39,77 @@ echo "Building Ansible SSH configuration file"
 
 for (( instance = 1; instance <= $1; instance++ ))
 do
-	printf "Host 10.10.10.1%i" instance >> /tmp/.ssh.cfg
-	printf "   User core" >> /tmp/.ssh.cfg
-	printf "   UserKnownHostsFile /dev/null" >> /tmp/.ssh.cfg
-	printf "   StrictHostKeyChecking no" >> /tmp/.ssh.cfg
-	printf "   PasswordAutehntication no" >> /tmp/.ssh.cfg
-	printf "   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey" >> /tmp/.ssh.cfg
-	printf "   IdentitiesOnly yes" >> /tmp/.ssh.cfg
-	printf "   LogLevel FATAL" >> /tmp/.ssh.cfg
-	printf " " >> /tmp/.ssh.cfg
+	printf "Host 10.10.10.1%i\n" instance >> /tmp/.ssh.cfg
+	printf "   User core\n" >> /tmp/.ssh.cfg
+	printf "   UserKnownHostsFile /dev/null\n" >> /tmp/.ssh.cfg
+	printf "   StrictHostKeyChecking no\n" >> /tmp/.ssh.cfg
+	printf "   PasswordAutehntication no\n" >> /tmp/.ssh.cfg
+	printf "   IdentityFile /home/vagrant/.ssh/VagrantPrivateKey\n" >> /tmp/.ssh.cfg
+	printf "   IdentitiesOnly yes\n" >> /tmp/.ssh.cfg
+	printf "   LogLevel FATAL\n" >> /tmp/.ssh.cfg
+	printf "\n" >> /tmp/.ssh.cfg
 done
+
+echo "Building default Ansible host file for local development"
+
+printf "localhost ansible_connection=local\n" >> /tmp/hosts
+
+for (( instance = 1; instance <= $1; instance++ ))
+do
+	printf "core0%i ansible_connection=ssh ansible_ssh_host=10.10.10.1%i ansible_python_interpreter=\"PATH=/home/core/bin:$PATH python\"\n" instance instance >> /tmp/hosts
+done
+
+printf "\n" >> /tmp/hosts
+
+printf "[control]\n" >> /tmp/hosts
+printf "localhost\n" >> /tmp/hosts
+printf "\n" >> /tmp/hosts
+
+printf "[mainmonitor]\n" >> /tmp/hosts
+printf "localhost\n" >> /tmp/hosts
+printf "\n" >> /tmp/hosts
+
+printf "[core]\n" >> /tmp/hosts
+for (( instance = 1; instance <= $1; instance++ ))
+do
+	printf "core0%i\n" instance >> /tmp/hosts
+done
+
+printf "\n" >> /tmp/hosts
+
+printf "[web]\n" >> /tmp/hosts
+for (( instance = 1; instance <= $1; instance++ ))
+do
+	printf "core0%i\n" instance >> /tmp/hosts
+done
+
+printf "\n" >> /tmp/hosts
+
+printf "[database]\n" >> /tmp/hosts
+for (( instance = 1; instance <= $1; instance++ ))
+do
+	printf "core0%i\n" instance >> /tmp/hosts
+done
+
+printf "\n" >> /tmp/hosts
+
+printf "[monitor]\n" >> /tmp/hosts
+for (( instance = 1; instance <= $1; instance++ ))
+do
+	printf "core0%i\n" instance >> /tmp/hosts
+done
+
+printf "\n" >> /tmp/hosts
+
+sudo mkdir /etc/ansible > /dev/null 2>&1
+sudo cp /tmp/hosts /etc/ansible/hosts > /dev/null 2>&1
+sudo chmod 666 /etc/ansible/hosts > /dev/null 2>&1
 
 echo "Copying over Vagrant private key"
 
 sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey > /dev/null 2>&1
 sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey > /dev/null 2>&1
 sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey > /dev/null 2>&1
-
-echo "Building default Ansible host file for local development"
-
-sudo mkdir /etc/ansible > /dev/null 2>&1
-sudo cp /vagrant/automation/LocalInventory /etc/ansible/hosts > /dev/null 2>&1
-sudo chmod 666 /etc/ansible/hosts > /dev/null 2>&1
 
 echo "Copying Ansible configuration files to correct location"
 
