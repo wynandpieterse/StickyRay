@@ -28,7 +28,7 @@ require 'fileutils'
 
 Vagrant.require_version ">= 1.6.0"
 
-$coreUserConfiguration = File.join(File.dirname(__FILE__), "automation/vagrant/UserData.yml")
+$coreUserConfiguration = File.join(File.dirname(__FILE__), "automation/CoreUserData.yml")
 $configurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/VagrantConfiguration.rb")
 
 require $configurationVariables
@@ -41,18 +41,18 @@ if $numberOfCoreMachines > 8
 	raise 'The number of CoreOS machines cant be more than 8'
 end
 
-if File.exists?('UserData.yml') && ARGV[0].eql?('up')
+if File.exists?('automation/CoreUserData.yml') && ARGV[0].eql?('up')
 	require 'open-uri'
 	require 'yaml'
 
 	token = open('https://discovery.etcd.io/new').read
 
-	data = YAML.load(IO.readlines('UserData.yml')[1..-1].join)
+	data = YAML.load(IO.readlines('automation/CoreUserData.yml')[1..-1].join)
 	data['coreos']['etcd']['discovery'] = token
 
 	yaml = YAML.dump(data)
 
-	File.open('UserData.yml', 'w') { |file| file.write("#{yaml}") }
+	File.open('automation/CoreUserData.yml', 'w') { |file| file.write("#{yaml}") }
 end
 
 Vagrant.configure("2") do |config|
