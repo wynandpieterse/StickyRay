@@ -30,6 +30,7 @@ $virtualBoxGUI = false
 $virtualBoxCPUs = 1
 $virtualBoxMemory = 1024
 
+$numberOfCoreMachines = 2
 $coreUpdateChannel = 'alpha'
 $exposeDocker = true
 $exposedDockerPort = 2375
