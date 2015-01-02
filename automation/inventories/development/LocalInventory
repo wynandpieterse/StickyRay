@@ -1,0 +1,30 @@
+localhost ansible_connection=local
+core01 ansible_connection=ssh ansible_ssh_host=10.10.10.11 ansible_python_interpreter="PATH=/home/core/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games python"
+core02 ansible_connection=ssh ansible_ssh_host=10.10.10.12 ansible_python_interpreter="PATH=/home/core/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games python"
+core03 ansible_connection=ssh ansible_ssh_host=10.10.10.13 ansible_python_interpreter="PATH=/home/core/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games python"
+
+[control]
+localhost
+
+[mainmonitor]
+localhost
+
+[core]
+core01
+core02
+core03
+
+[web]
+core01
+core02
+core03
+
+[database]
+core01
+core02
+core03
+
+[monitor]
+core01
+core02
+core03
