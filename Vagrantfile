@@ -107,10 +107,10 @@ Vagrant.configure("2") do |config|
 
 		$currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
 		$logDirectory = "/vagrant/intermediate/vagrant/provisioning/"
-		$logFile = "%s/%s.log" % $logDirectory % $currentTime
+		$logFile = "%s%s.log" % [$logDirectory, $currentTime]
 
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false, :args => "%s %s" % $logFile % $logDirectory
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % $logFile % $numberOfCoreMachines
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false, :args => "%s %s" % [$logFile, $logDirectory]
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % [$logFile, $numberOfCoreMachines]
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false, :args => "%s" % $logFile
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false, :args => "%s" % $logFile
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false, :args => "%s" % $logFile
