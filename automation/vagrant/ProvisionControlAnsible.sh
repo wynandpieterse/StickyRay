@@ -28,7 +28,7 @@
 NOW="$(date +"%d-%m-%Y-%H-%M")"
 DIRECTORY="/vagrant/intermediate/vagrant/provision/controlansible/"
 EXTENSION=".log"
-LOGFILE="$NOW$EXTENSION"
+LOGFILE="$DIRECTORY$NOW$EXTENSION"
 
 sudo mkdir $DIRECTORY
 sudo touch $LOGFILE
