@@ -84,6 +84,16 @@ Vagrant.configure("2") do |config|
 				v.functional_vboxsf     = false
 			end
 
+			if $enableSerialLogging
+				logDirectory File.join(File.dirname(__FILE__), "intermediate/vagrant/serial/%s/" % vmName)
+				FileUtils.mkdir_p(logDirectory)
+
+				currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
+
+				serialFile = File.join(logDirectory, "%s.log" % currentTime)
+				FileUtils.touch(serialFile)
+			end
+
 			if Vagrant.has_plugin?("vagrant-vbguest") then
 				core.vbguest.auto_update = false
 			end
@@ -104,6 +114,16 @@ Vagrant.configure("2") do |config|
 		control.vm.box = "https://cloud-images.ubuntu.com/vagrant/utopic/20141222/utopic-server-cloudimg-amd64-vagrant-disk1.box"
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
+
+		if $enableSerialLogging
+			logDirectory File.join(File.dirname(__FILE__), "intermediate/vagrant/serial/%s/" % vmName)
+			FileUtils.mkdir_p(logDirectory)
+
+			currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
+
+			serialFile = File.join(logDirectory, "%s.log" % currentTime)
+			FileUtils.touch(serialFile)
+		end
 
 		$currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
 		$logDirectory = "/vagrant/intermediate/vagrant/provisioning/"
