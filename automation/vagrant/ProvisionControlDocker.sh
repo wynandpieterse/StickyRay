@@ -27,4 +27,4 @@
 
 echo "Updating control machine to have Docker"
 
-ansible-playbook /vagrant/automation/BootstrapControlDocker.yml
+ansible-playbook /vagrant/automation/BootstrapControlDocker.yml > /dev/null 2>&1
