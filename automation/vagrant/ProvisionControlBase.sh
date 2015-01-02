@@ -30,12 +30,12 @@ sudo touch $1
 
 echo "Updating package list"
 
-sudo apt-get update >> $1
+sudo apt-get update &> $1
 
 echo "Installing dos2unix utility"
 
-sudo apt-get install dos2unix -y >> $1
+sudo apt-get install dos2unix -y &> $1
 
 echo "Converting files to Linux line endings"
 
-find /vagrant/ -type f -exec dos2unix {} \; >> $1
+find /vagrant/ -type f -exec dos2unix {} \; &> $1

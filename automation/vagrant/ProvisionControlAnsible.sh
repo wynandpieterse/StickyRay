@@ -27,12 +27,12 @@
 
 echo "Installing Ansible"
 
-sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" >> $1
+sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" &> $1
 
 echo "Downloading CoreOS bootstrap packages"
 
-ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles >> $1
+ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles &> $1
 
 echo "Updating CoreOS installation to have Python"
 
-ansible-playbook /vagrant/automation/BootstrapCore.yml >> $1
+ansible-playbook /vagrant/automation/BootstrapCore.yml &> $1
