@@ -68,15 +68,15 @@ Vagrant.configure("2") do |config|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
 			core.vm.box = "coreos-%s" % $coreUpdateChannel
-			core.vm.box_version = ">= 308.0.1"
+			core.vm.box_version = "494.5.0"
 			core.vm.network :private_network, ip: "10.10.10.#{instanceID + 10}"
 
 			core.vm.provider :virtualbox do |vb, override|
-				override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant.json" % $coreUpdateChannel
+				override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/494.5.0/coreos_production_vagrant.json" % $coreUpdateChannel
 			end
 
 			core.vm.provider :vmware_fusion do |vb, override|
-				override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/current/coreos_production_vagrant_vmware_fusion.json" % $coreUpdateChannel
+				override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/494.5.0/coreos_production_vagrant_vmware_fusion.json" % $coreUpdateChannel
 			end
 
 			core.vm.provider :virtualbox do |v|
@@ -101,7 +101,7 @@ Vagrant.configure("2") do |config|
 
 	config.vm.define "control", primary: true do |control|
 		control.vm.hostname = "control"
-		control.vm.box = "https://cloud-images.ubuntu.com/vagrant/utopic/current/utopic-server-cloudimg-amd64-vagrant-disk1.box"
+		control.vm.box = "https://cloud-images.ubuntu.com/vagrant/utopic/20141222/utopic-server-cloudimg-amd64-vagrant-disk1.box"
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
