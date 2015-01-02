@@ -109,10 +109,10 @@ Vagrant.configure("2") do |config|
 		$logDirectory = "/vagrant/intermediate/vagrant/provisioning/"
 		$logFile = "%s/%s.log" % $logDirectory % $currentTime
 
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false, :args => $logFile $logDirectory
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => $logFile $numberOfCoreMachines
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false, :args => $logFile
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false, :args => $logFile
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false, :args => $logFile
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false, :args => "%s %s" % $logFile % $logDirectory
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % $logFile % $numberOfCoreMachines
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false, :args => "%s" % $logFile
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false, :args => "%s" % $logFile
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false, :args => "%s" % $logFile
 	end
 end
