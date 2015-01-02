@@ -24,6 +24,8 @@
 # Version 0.0.6
 #
 
+$enableSerialLogging = true
+
 $virtualBoxGUI = false
 $virtualBoxCPUs = 1
 $virtualBoxMemory = 1024
