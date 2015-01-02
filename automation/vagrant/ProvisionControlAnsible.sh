@@ -25,18 +25,26 @@
 # Version 0.0.5
 #
 
+NOW="$(date +"%d-%m-%Y-%H-%M")"
+DIRECTORY="/vagrant/intermediate/vagrant/provision/controlansible/"
+EXTENSION=".log"
+LOGFILE="$NOW$EXTENSION"
+
+sudo mkdir $DIRECTORY
+sudo touch $LOGFILE
+
 echo "Installing Ansible"
 
-sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" > /dev/null 2>&1
+sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" >> $LOGFILE
 
 echo "Downloading CoreOS bootstrap packages"
 
-ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles > /dev/null 2>&1
+ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles >> $LOGFILE
 
 echo "Converting files to Linux line endings"
 
-find /vagrant/automation/roles/defunctzombie.coreos-bootstrap -type f -exec dos2unix {} \; > /dev/null 2>&1
+find /vagrant/automation/roles/defunctzombie.coreos-bootstrap -type f -exec dos2unix {} \; >> $LOGFILE
 
 echo "Updating CoreOS installation to have Python"
 
-ansible-playbook /vagrant/automation/BootstrapCore.yml > /dev/null 2>&1
+ansible-playbook /vagrant/automation/BootstrapCore.yml >> $LOGFILE
