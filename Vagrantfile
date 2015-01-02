@@ -105,10 +105,14 @@ Vagrant.configure("2") do |config|
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => $numberOfCoreMachines
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false
+		$currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
+		$logDirectory = "/vagrant/intermediate/vagrant/provisioning/"
+		$logFile = "%s/%s.log" % $logDirectory % $currentTime
+
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false, :args => $logFile $logDirectory
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => $logFile $numberOfCoreMachines
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false, :args => $logFile
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false, :args => $logFile
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false, :args => $logFile
 	end
 end
