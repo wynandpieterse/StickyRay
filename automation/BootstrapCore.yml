@@ -1,4 +1,3 @@
-#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -25,14 +24,8 @@
 # Version 0.0.6
 #
 
-echo "Installing Ansible"
-
-sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" &>> $1
-
-echo "Downloading CoreOS bootstrap packages"
-
-ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/roles &>> $1
-
-echo "Updating CoreOS installation to have Python"
-
-ansible-playbook /vagrant/automation/BootstrapCore.yml &>> $1
+- name: Bootstrap CoreOS hosts
+  hosts: core
+  gather_facts: false
+  roles:
+    - defunctzombie.coreos-bootstrap

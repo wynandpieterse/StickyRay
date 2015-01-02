@@ -21,7 +21,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.5
+# Version 0.0.6
 #
 
 $virtualBoxGUI = false
@@ -29,7 +29,7 @@ $virtualBoxCPUs = 1
 $virtualBoxMemory = 1024
 
 # This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
-$numberOfCoreMachines = 1
-$coreUpdateChannel = 'alpha'
+$numberOfCoreMachines = 3
+$coreUpdateChannel = 'stable'
 $exposeDocker = true
 $exposedDockerPort = 2375

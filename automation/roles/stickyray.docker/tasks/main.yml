@@ -21,9 +21,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.5
+# Version 0.0.6
 #
 
-- name: Install Docker on control machine
+- name: Install Docker
   sudo: yes
   apt: name=docker.io state=present

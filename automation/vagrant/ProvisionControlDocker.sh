@@ -22,5 +22,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.5
+# Version 0.0.6
 #
+
+echo "Updating control machine to have Docker"
+
+ansible-playbook /vagrant/automation/BootstrapControlDocker.yml &>> $1

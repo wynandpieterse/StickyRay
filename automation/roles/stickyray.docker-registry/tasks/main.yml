@@ -21,13 +21,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.5
+# Version 0.0.6
 #
 
 - name: Create Docker registry data folder
   file:
-    path: /vagrant/intermediate/docker/control/registry
+    path: "{{ docker_registry_host_path }}"
     state: directory
 
-- name: Install & run a Docker registry
-  raw: docker run -d -p 5000:5000 -e SETTINGS_FLAVOR=local -e STORAGE_PATH=/registry -v /vagrant/intermediate/docker/control/registry:/registry registry
+- name: Install and run a Docker registry
+  raw: docker run -d -p {{ docker_registry_port }}:5000 -e SETTINGS_FLAVOR={{ docker_settings_flavor }} -e STORAGE_PATH={{ docker_registry_container_path }} -v {{ docker_registry_host_path }}:{{ docker_registry_container_path }} registry
