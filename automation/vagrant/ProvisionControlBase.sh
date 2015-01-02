@@ -25,8 +25,8 @@
 # Version 0.0.5
 #
 
-sudo mkdir $2
-sudo touch $1
+sudo mkdir $2 &> /dev/null
+sudo touch $1 &> /dev/null
 
 echo "Updating package list"
 
