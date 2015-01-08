@@ -25,7 +25,7 @@
 #
 
 # Standard Ignores
-[Ii]ntermediate/
+[Gg]ntermediate/
 
 # Vagrant Ignores
 .[Vv]agrant/
