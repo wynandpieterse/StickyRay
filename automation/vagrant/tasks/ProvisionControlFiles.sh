@@ -136,7 +136,7 @@ sudo chmod 666 /etc/ansible/hosts &>> $1
 
 echo "Copying over Vagrant private key"
 
-sudo cp /vagrant/automation/vagrant/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey &>> $1
+sudo cp /vagrant/automation/vagrant/files/VagrantPrivateKey /home/vagrant/.ssh/VagrantPrivateKey &>> $1
 sudo chmod 400 /home/vagrant/.ssh/VagrantPrivateKey &>> $1
 sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey &>> $1
 
