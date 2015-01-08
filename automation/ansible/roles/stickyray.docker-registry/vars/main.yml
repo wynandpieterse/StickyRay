@@ -25,6 +25,7 @@
 #
 
 ---
-# Role that installs Docker on the target machines
- - name: Install Docker
-   apt: name=docker.io state=present
+docker_registry_host_path: /registry
+docker_registry_container_path: /registry
+docker_registry_port: 5000
+docker_settings_flavor: local

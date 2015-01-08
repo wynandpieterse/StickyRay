@@ -24,7 +24,11 @@
 # Version 0.0.6
 #
 
-- name: Bootstrap control machine to have Docker
-  hosts: control
-  roles:
-    - stickyray.docker
+---
+# Bootstrap the control machine to have Docker installed on it.
+ - name: Bootstrap control machine to have Docker
+   hosts: control
+   sudo: yes
+   gather_facts: no
+   roles:
+     - stickyray.docker
