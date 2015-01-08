@@ -62,12 +62,12 @@ Vagrant.configure("2") do |config|
 	config.ssh.insert_key = true
 
 	config.vm.provider :virtualbox do |vb|
-		vb.gui = $virtualBoxGUI
-		vb.memory = $virtualBoxMemory
-		vb.cpus = $virtualBoxCPUs
+		vb.gui = $vmGUIEnabled
+		vb.memory = $vmMemory
+		vb.cpus = $vmCPUCores
 	end
 
-	(1..$numberOfCoreMachines).each do |instanceID|
+	(1..$coreInstances).each do |instanceID|
 		config.vm.define vmName = "core-%02d" % instanceID do |core|
 			core.vm.hostname = vmName
 			core.vm.box = "coreos-%s" % $coreUpdateChannel
@@ -87,7 +87,7 @@ Vagrant.configure("2") do |config|
 				v.functional_vboxsf     = false
 			end
 
-			if $enableSerialLogging
+			if $vmSerialLoggingEnabled
 				serialLogDirectory =  File.join(File.dirname(__FILE__), "generated/vagrant/serial/%s/" % vmName)
 				FileUtils.mkdir_p(serialLogDirectory)
 
@@ -101,8 +101,8 @@ Vagrant.configure("2") do |config|
 				core.vbguest.auto_update = false
 			end
 
-			if $exposeDocker
-				core.vm.network "forwarded_port", guest: 2375, host: ($exposedDockerPort + instanceID - 1), auto_correct: true
+			if $coreExposeDocker
+				core.vm.network "forwarded_port", guest: 2375, host: ($coreExposedDockerPort + instanceID - 1), auto_correct: true
 			end
 
 			if File.exists?($coreUserConfiguration)
@@ -118,7 +118,7 @@ Vagrant.configure("2") do |config|
 		control.vm.network :private_network, ip: "10.10.10.10"
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
-		if $enableSerialLogging
+		if $vmSerialLoggingEnabled
 			serialLogDirectory = File.join(File.dirname(__FILE__), "generated/vagrant/serial/control/")
 			FileUtils.mkdir_p(serialLogDirectory)
 
@@ -133,7 +133,7 @@ Vagrant.configure("2") do |config|
 		$logFile = "%s%s.log" % [$logDirectory, $currentTime]
 
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false, :args => "%s %s" % [$logFile, $logDirectory]
-		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % [$logFile, $numberOfCoreMachines]
+		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % [$logFile, $coreInstances]
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlAnsible.sh", :privileged => false, :args => "%s" % $logFile
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlDocker.sh", :privileged => false, :args => "%s" % $logFile
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlRegistry.sh", :privileged => false, :args => "%s" % $logFile
