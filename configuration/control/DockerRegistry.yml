@@ -25,6 +25,7 @@
 #
 
 ---
+# The settings used to run a Docker registry on the control machine.
 docker_registry_host_path: /vagrant/generated/docker/control/registry
 docker_registry_container_path: /registry
 docker_registry_port: 5000

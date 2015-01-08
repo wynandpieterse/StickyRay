@@ -28,7 +28,7 @@ require 'fileutils'
 
 Vagrant.require_version ">= 1.6.0"
 
-$coreUserConfiguration = File.join(File.dirname(__FILE__), "configuration/coreos/LocalUserData.yml")
+$coreUserConfiguration = File.join(File.dirname(__FILE__), "generated/coreos/LocalUserData.yml")
 $configurationVariables = File.join(File.dirname(__FILE__), "configuration/vagrant/Configuration.rb")
 
 require $configurationVariables
@@ -45,6 +45,9 @@ if File.exists?('configuration/coreos/LocalUserData.yml') && ARGV[0].eql?('up')
 	require 'open-uri'
 	require 'yaml'
 
+	serialLogDirectory = File.join(File.dirname(__FILE__), "generated/coreos/")
+	FileUtils.mkdir_p(serialLogDirectory)
+
 	token = open('https://discovery.etcd.io/new').read
 
 	data = YAML.load(IO.readlines('configuration/coreos/LocalUserData.yml')[1..-1].join)
@@ -52,7 +55,7 @@ if File.exists?('configuration/coreos/LocalUserData.yml') && ARGV[0].eql?('up')
 
 	yaml = YAML.dump(data)
 
-	File.open('configuration/coreos/LocalUserData.yml', 'w') { |file| file.write("#{yaml}") }
+	File.open('generated/coreos/LocalUserData.yml', 'w') { |file| file.write("#{yaml}") }
 end
 
 Vagrant.configure("2") do |config|
