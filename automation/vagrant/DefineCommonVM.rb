@@ -23,3 +23,11 @@
 # 
 # Version 0.0.6
 #
+
+config.ssh.insert_key = true
+
+config.vm.provider :virtualbox do |vb|
+	vb.gui = $vmGUIEnabled
+	vb.memory = $vmMemory
+	vb.cpus = $vmCPUCores
+end

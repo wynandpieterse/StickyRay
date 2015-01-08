@@ -23,3 +23,11 @@
 # 
 # Version 0.0.6
 #
+
+if $numberOfCoreMachines < 1
+	raise 'The number of CoreOS machines cant be less than 1'
+end
+
+if $numberOfCoreMachines > 8
+	raise 'The number of CoreOS machines cant be more than 8'
+end

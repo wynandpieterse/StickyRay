@@ -23,3 +23,20 @@
 # 
 # Version 0.0.6
 #
+
+if File.exists?('configuration/coreos/LocalUserData.yml') && ARGV[0].eql?('up')
+	require 'open-uri'
+	require 'yaml'
+
+	serialLogDirectory = File.join(File.dirname(__FILE__), "generated/coreos/")
+	FileUtils.mkdir_p(serialLogDirectory)
+
+	token = open('https://discovery.etcd.io/new').read
+
+	data = YAML.load(IO.readlines('configuration/coreos/LocalUserData.yml')[1..-1].join)
+	data['coreos']['etcd']['discovery'] = token
+
+	yaml = YAML.dump(data)
+
+	File.open('generated/coreos/LocalUserData.yml', 'w') { |file| file.write("#{yaml}") }
+end
