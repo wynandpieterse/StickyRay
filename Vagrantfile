@@ -28,8 +28,8 @@ require 'fileutils'
 
 Vagrant.require_version ">= 1.6.0"
 
-$coreUserConfiguration = File.join(File.dirname(__FILE__), "automation/CoreUserData.yml")
-$configurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/VagrantConfiguration.rb")
+$coreUserConfiguration = File.join(File.dirname(__FILE__), "configuration/coreos/LocalUserData.yml")
+$configurationVariables = File.join(File.dirname(__FILE__), "configuration/vagrant/Configuration.rb")
 
 require $configurationVariables
 
@@ -41,18 +41,18 @@ if $numberOfCoreMachines > 8
 	raise 'The number of CoreOS machines cant be more than 8'
 end
 
-if File.exists?('automation/CoreUserData.yml') && ARGV[0].eql?('up')
+if File.exists?('configuration/coreos/LocalUserData.yml') && ARGV[0].eql?('up')
 	require 'open-uri'
 	require 'yaml'
 
 	token = open('https://discovery.etcd.io/new').read
 
-	data = YAML.load(IO.readlines('automation/CoreUserData.yml')[1..-1].join)
+	data = YAML.load(IO.readlines('configuration/coreos/LocalUserData.yml')[1..-1].join)
 	data['coreos']['etcd']['discovery'] = token
 
 	yaml = YAML.dump(data)
 
-	File.open('automation/CoreUserData.yml', 'w') { |file| file.write("#{yaml}") }
+	File.open('configuration/coreos/LocalUserData.yml', 'w') { |file| file.write("#{yaml}") }
 end
 
 Vagrant.configure("2") do |config|
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
 			end
 
 			if $enableSerialLogging
-				serialLogDirectory =  File.join(File.dirname(__FILE__), "intermediate/vagrant/serial/%s/" % vmName)
+				serialLogDirectory =  File.join(File.dirname(__FILE__), "generated/vagrant/serial/%s/" % vmName)
 				FileUtils.mkdir_p(serialLogDirectory)
 
 				currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
@@ -116,7 +116,7 @@ Vagrant.configure("2") do |config|
 		control.vm.network "forwarded_port", guest: 5000, host: 5000
 
 		if $enableSerialLogging
-			serialLogDirectory = File.join(File.dirname(__FILE__), "intermediate/vagrant/serial/control")
+			serialLogDirectory = File.join(File.dirname(__FILE__), "generated/vagrant/serial/control/")
 			FileUtils.mkdir_p(serialLogDirectory)
 
 			currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
@@ -126,7 +126,7 @@ Vagrant.configure("2") do |config|
 		end
 
 		$currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
-		$logDirectory = "/vagrant/intermediate/vagrant/provisioning/"
+		$logDirectory = "/vagrant/generated/vagrant/provisioning/"
 		$logFile = "%s%s.log" % [$logDirectory, $currentTime]
 
 		control.vm.provision :shell, :path => "automation/vagrant/ProvisionControlBase.sh", :privileged => false, :args => "%s %s" % [$logFile, $logDirectory]

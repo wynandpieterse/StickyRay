@@ -28,7 +28,7 @@
   hosts: control
   sudo: true
   vars:
-    docker_registry_host_path: /vagrant/intermediate/docker/control/registry
+    docker_registry_host_path: /vagrant/generated/docker/control/registry
     docker_registry_container_path: /registry
     docker_registry_port: 5000
     docker_settings_flavor: local
