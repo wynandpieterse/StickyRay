@@ -24,14 +24,26 @@
 # Version 0.0.6
 #
 
+# Should the VM provider output debug data about the VM through serial logs.
 $enableSerialLogging = true
 
+# Should the VM provider build a headed VM.
 $virtualBoxGUI = false
+
+# How many cores should each VM have.
 $virtualBoxCPUs = 1
+
+# How much MB memory should each VM have.
 $virtualBoxMemory = 1024
 
 # This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
 $numberOfCoreMachines = 3
+
+# The updated channel to use for CoreOS images.
 $coreUpdateChannel = 'stable'
+
+# Should the CoreOS machines expose their internal Docker socket.
 $exposeDocker = true
+
+# If the above is true, on which port should the Docker server listen for requests.
 $exposedDockerPort = 2375
