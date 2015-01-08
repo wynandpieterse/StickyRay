@@ -27,4 +27,4 @@
 
 echo "Updating control machine to have Docker registry"
 
-ansible-playbook /vagrant/automation/BootstrapControlDockerRegistry.yml &>> $1
+ansible-playbook /vagrant/automation/ansible/BootstrapControlDockerRegistry.yml &>> $1

@@ -1,4 +1,4 @@
-#
+# 
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -24,10 +24,32 @@
 # Version 0.0.6
 #
 
-- name: Create Docker registry data folder
-  file:
-    path: "{{ docker_registry_host_path }}"
-    state: directory
+---
+coreos:
+  update:
+    reboot-strategy: false
+  etcd:
+    addr: $public_ipv4:4001
+    peer-addr: $public_ipv4:7001
+    discovery: https://discovery.etcd.io/<TOKEN>
+  fleet:
+    public-ip: $public_ipv4
+  units:
+  - name: etcd.service
+    command: start
+  - name: fleet.service
+    command: start
+  - name: docker-tcp.socket
+    command: start
+    enable: true
+    content: |
+      [Unit]
+      Description=Docker Socket for the API
 
-- name: Install and run a Docker registry
-  raw: docker run -d -p {{ docker_registry_port }}:5000 -e SETTINGS_FLAVOR={{ docker_settings_flavor }} -e STORAGE_PATH={{ docker_registry_container_path }} -v {{ docker_registry_host_path }}:{{ docker_registry_container_path }} registry
+      [Socket]
+      ListenStream=2375
+      Service=docker.service
+      BindIPv6Only=both
+
+      [Install]
+      WantedBy=sockets.target

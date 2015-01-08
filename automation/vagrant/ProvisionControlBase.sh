@@ -39,3 +39,4 @@ sudo apt-get install dos2unix -y &>> $1
 echo "Converting files to Linux line endings"
 
 find /vagrant/automation/ -type f -exec dos2unix {} \; &>> $1
+find /vagrant/configuration/ -type f -exec dos2unix {} \; &>> $1

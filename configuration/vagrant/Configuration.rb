@@ -24,8 +24,26 @@
 # Version 0.0.6
 #
 
-# Standard Ignores
-[Gg]enerated/
+# Should the VM provider output debug data about the VM through serial logs.
+$vmSerialLoggingEnabled = true
 
-# Vagrant Ignores
-.[Vv]agrant/
+# Should the VM provider build a headed VM.
+$vmGUIEnabled = false
+
+# How many cores should each VM have.
+$vmCPUCores = 1
+
+# How much MB memory should each VM have.
+$vmMemory = 1024
+
+# This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
+$coreInstances = 3
+
+# The updated channel to use for CoreOS images.
+$coreUpdateChannel = 'stable'
+
+# Should the CoreOS machines expose their internal Docker socket.
+$coreExposeDocker = true
+
+# If the above is true, on which port should the Docker server listen for requests.
+$coreExposedDockerPort = 2375

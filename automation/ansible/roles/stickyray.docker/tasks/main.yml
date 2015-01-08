@@ -24,6 +24,7 @@
 # Version 0.0.6
 #
 
-- name: Install Docker
-  sudo: yes
-  apt: name=docker.io state=present
+---
+# Role that installs Docker on the target machines
+ - name: Install Docker
+   apt: name=docker.io state=present

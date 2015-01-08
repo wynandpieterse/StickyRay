@@ -1,4 +1,4 @@
-#
+# 
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -24,7 +24,11 @@
 # Version 0.0.6
 #
 
-- name: Bootstrap control machine to have Docker
-  hosts: control
-  roles:
-    - stickyray.docker
+---
+# This playbook makes sure that CoreOS hosts have a Python interpreter on them
+# so that Ansible can use modules there.
+ - name: Bootstrap CoreOS hosts to have a Python interpreter
+   hosts: core
+   gather_facts: no
+   roles:
+     - defunctzombie.coreos-bootstrap

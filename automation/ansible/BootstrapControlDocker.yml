@@ -1,4 +1,4 @@
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -24,14 +24,11 @@
 # Version 0.0.6
 #
 
-$enableSerialLogging = true
-
-$virtualBoxGUI = false
-$virtualBoxCPUs = 1
-$virtualBoxMemory = 1024
-
-# This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
-$numberOfCoreMachines = 3
-$coreUpdateChannel = 'stable'
-$exposeDocker = true
-$exposedDockerPort = 2375
+---
+# Bootstrap the control machine to have Docker installed on it.
+ - name: Bootstrap control machine to have Docker
+   hosts: control
+   sudo: yes
+   gather_facts: no
+   roles:
+     - stickyray.docker

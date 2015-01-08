@@ -1,4 +1,4 @@
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -24,8 +24,12 @@
 # Version 0.0.6
 #
 
-# Standard Ignores
-[Gg]enerated/
+---
+# Role that creates a Docker registry on the target machines.
+ - name: Create Docker registry data folder
+   file:
+     path: "{{ docker_registry_host_path }}"
+     state: directory
 
-# Vagrant Ignores
-.[Vv]agrant/
+ - name: Install and run the Docker registry
+   raw: docker run -d -p {{ docker_registry_port }}:5000 -e SETTINGS_FLAVOR={{ docker_settings_flavor }} -e STORAGE_PATH={{ docker_registry_container_path }} -v {{ docker_registry_host_path }}:{{ docker_registry_container_path }} registry

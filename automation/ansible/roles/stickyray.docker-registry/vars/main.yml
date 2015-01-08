@@ -1,4 +1,4 @@
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -24,8 +24,8 @@
 # Version 0.0.6
 #
 
-- name: Bootstrap CoreOS hosts
-  hosts: core
-  gather_facts: false
-  roles:
-    - defunctzombie.coreos-bootstrap
+---
+docker_registry_host_path: /registry
+docker_registry_container_path: /registry
+docker_registry_port: 5000
+docker_settings_flavor: local
