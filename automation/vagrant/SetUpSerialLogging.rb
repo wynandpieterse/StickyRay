@@ -24,6 +24,9 @@
 # Version 0.0.6
 #
 
+# Enables serial logging on the requested instances. This can be usefull for checking
+# startup errors on the VM itself. WARNING: Heavy performance intensive, only
+# user for low-level debugging requirements.
 if $vmSerialLoggingEnabled
 	serialLogDirectory =  File.join(File.dirname(__FILE__), "generated/vagrant/serial/%s/" % vmName)
 	FileUtils.mkdir_p(serialLogDirectory)

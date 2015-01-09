@@ -24,6 +24,7 @@
 # Version 0.0.6
 #
 
+# Regenerate the CoreOS cluster token if the system is brought up on Vagrant.
 if File.exists?('configuration/coreos/LocalUserData.yml') && ARGV[0].eql?('up')
 	require 'open-uri'
 	require 'yaml'

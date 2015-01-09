@@ -24,8 +24,13 @@
 # Version 0.0.6
 #
 
+# Defines common VM properties that is used by both the CoreOS nodes and the
+# control node.
+
+# Insert the Vagrant public key into the machines.
 config.ssh.insert_key = true
 
+# Configure how much memory and CPU cores each VM should have.
 config.vm.provider :virtualbox do |vb|
 	vb.gui = $vmGUIEnabled
 	vb.memory = $vmMemory

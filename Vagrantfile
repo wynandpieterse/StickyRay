@@ -28,6 +28,7 @@ require 'fileutils'
 
 Vagrant.require_version ">= 1.6.0"
 
+# Define all the files that the Vagrant file will require.
 $configurationVariables = File.join(File.dirname(__FILE__), "configuration/vagrant/Configuration.rb")
 $checkConfigurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/CheckConfiguration.rb")
 $checkCoreOSClusterToken = File.join(File.dirname(__FILE__), "automation/vagrant/CheckCoreOSClusterToken.rb")
@@ -36,12 +37,15 @@ $defineCoreOSVM = File.join(File.dirname(__FILE__), "automation/vagrant/DefineCo
 $defineControlVM = File.join(File.dirname(__FILE__), "automation/vagrant/DefineControlVM.rb")
 $setUpSerialLogging = File.join(File.dirname(__FILE__), "automation/vagrant/SetUpSerialLogging.rb")
 
+# CoreOS User Data configuration file for local systems.
 $coreUserConfiguration = File.join(File.dirname(__FILE__), "generated/coreos/LocalUserData.yml")
 
+# Load the configuration and check that all the CoreOS stuff is up to date.
 require $configurationVariables
 require $checkConfigurationVariables
 require $checkCoreOSClusterToken
 
+# Configure the actual vagrant box.
 Vagrant.configure("2") do |config|
     eval(IO.read($defineCommonVM), binding)
     eval(IO.read($defineCoreOSVM), binding)

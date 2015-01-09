@@ -24,6 +24,7 @@
 # Version 0.0.6
 #
 
+# Check to make sure that the CoreOS instance count is set to an acceptable value.
 if $coreInstances < 1
 	raise 'The number of CoreOS machines cant be less than 1'
 end
