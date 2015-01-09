@@ -23,3 +23,13 @@
 # 
 # Version 0.0.6
 #
+
+if $vmSerialLoggingEnabled
+	serialLogDirectory =  File.join(File.dirname(__FILE__), "generated/vagrant/serial/%s/" % vmName)
+	FileUtils.mkdir_p(serialLogDirectory)
+
+	currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
+
+	serialFile = File.join(serialLogDirectory, "%s.log" % currentTime)
+	FileUtils.touch(serialFile)
+end

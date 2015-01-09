@@ -34,6 +34,7 @@ $checkCoreOSClusterToken = File.join(File.dirname(__FILE__), "automation/vagrant
 $defineCommonVM = File.join(File.dirname(__FILE__), "automation/vagrant/DefineCommonVM.rb")
 $defineCoreOSVM = File.join(File.dirname(__FILE__), "automation/vagrant/DefineCoreOSVM.rb")
 $defineControlVM = File.join(File.dirname(__FILE__), "automation/vagrant/DefineControlVM.rb")
+$setUpSerialLogging = File.join(File.dirname(__FILE__), "automation/vagrant/SetUpSerialLogging.rb")
 
 $coreUserConfiguration = File.join(File.dirname(__FILE__), "generated/coreos/LocalUserData.yml")
 
@@ -42,7 +43,7 @@ require $checkConfigurationVariables
 require $checkCoreOSClusterToken
 
 Vagrant.configure("2") do |config|
-    require $defineCommonVM
-    require $defineCoreOSVM
-    require $defineControlVM
+    eval(IO.read($defineCommonVM), binding)
+    eval(IO.read($defineCoreOSVM), binding)
+    eval(IO.read($defineControlVM), binding)
 end
