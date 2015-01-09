@@ -1,4 +1,3 @@
-#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -25,15 +24,9 @@
 # Version 0.0.6
 #
 
-echo "Updating package list"
+# Create the log file that provisioning scripts can write out to.
+currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
+logDirectory = "/vagrant/generated/vagrant/provisioning/%s/" % vmName
+logFile = "%s%s.log" % [$logDirectory, $currentTime]
 
-sudo apt-get update &>> $1
-
-echo "Installing dos2unix utility"
-
-sudo apt-get install dos2unix -y &>> $1
-
-echo "Converting files to Linux line endings"
-
-find /vagrant/automation/ -type f -exec dos2unix {} \; &>> $1
-find /vagrant/configuration/ -type f -exec dos2unix {} \; &>> $1
+FileUtils.mkdir_p(logDirectory)

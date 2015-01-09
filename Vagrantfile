@@ -32,10 +32,13 @@ Vagrant.require_version ">= 1.6.0"
 $configurationVariables = File.join(File.dirname(__FILE__), "configuration/vagrant/Configuration.rb")
 $checkConfigurationVariables = File.join(File.dirname(__FILE__), "automation/vagrant/CheckConfiguration.rb")
 $checkCoreOSClusterToken = File.join(File.dirname(__FILE__), "automation/vagrant/CheckCoreOSClusterToken.rb")
+
 $defineCommonVM = File.join(File.dirname(__FILE__), "automation/vagrant/DefineCommonVM.rb")
 $defineCoreOSVM = File.join(File.dirname(__FILE__), "automation/vagrant/DefineCoreOSVM.rb")
 $defineControlVM = File.join(File.dirname(__FILE__), "automation/vagrant/DefineControlVM.rb")
+
 $setUpSerialLogging = File.join(File.dirname(__FILE__), "automation/vagrant/SetUpSerialLogging.rb")
+$setUpProvisionLogging = File.join(File.dirname(__FILE__), "automation/vagrant/SetUpProvisionLogging.rb")
 
 # CoreOS User Data configuration file for local systems.
 $coreUserConfiguration = File.join(File.dirname(__FILE__), "generated/coreos/LocalUserData.yml")

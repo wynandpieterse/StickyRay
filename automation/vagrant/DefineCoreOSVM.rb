@@ -47,6 +47,9 @@
 			core.vm.network "forwarded_port", guest: 2375, host: ($coreExposedDockerPort + instanceID - 1), auto_correct: true
 		end
 
+		# Build the location where log files can output their logs.
+		eval(IO.read($setUpProvisionLogging), binding)
+
 		# Provision the machines.
 		if File.exists?($coreUserConfiguration)
 			core.vm.provision :file, :source => "#{$coreUserConfiguration}", :destination => "/tmp/vagrantfile-user-data"

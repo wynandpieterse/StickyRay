@@ -37,13 +37,12 @@ config.vm.define vmName = "control", primary: true  do |control|
 	eval(IO.read($setUpSerialLogging), binding)
 
 	# Build the log directory where all internal control machines logs will go to.
-	$currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
-	$logDirectory = "/vagrant/generated/vagrant/provisioning/control/"
-	$logFile = "%s%s.log" % [$logDirectory, $currentTime]
+	eval(IO.read($setUpProvisionLogging), binding)
 
-	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlBase.sh", :privileged => false, :args => "%s %s" % [$logFile, $logDirectory]
-	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % [$logFile, $coreInstances]
-	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlAnsible.sh", :privileged => false, :args => "%s" % $logFile
-	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlDocker.sh", :privileged => false, :args => "%s" % $logFile
-	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlRegistry.sh", :privileged => false, :args => "%s" % $logFile
+	# Provision the machines.
+	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlBase.sh", :privileged => false, :args => "%s %s" % logFile
+	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % [logFile, $coreInstances]
+	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlAnsible.sh", :privileged => false, :args => "%s" % logFile
+	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlDocker.sh", :privileged => false, :args => "%s" % logFile
+	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlRegistry.sh", :privileged => false, :args => "%s" % logFile
 end
