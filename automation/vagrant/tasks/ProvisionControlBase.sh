@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -24,42 +25,15 @@
 # Version 0.0.6
 #
 
-# Should the VM provider output debug data about the VM through serial logs.
-$vmSerialLoggingEnabled = true
+echo "Updating package list"
 
-# Should the VM provisioning process log output
-$vmProvisionLoggingEnabled = true
+sudo apt-get update &>> $1
 
-# Should the VM provider build a headed VM.
-$vmGUIEnabled = false
+echo "Installing dos2unix utility"
 
-# How many cores should each VM have.
-$vmCPUCores = 1
+sudo apt-get install dos2unix -y &>> $1
 
-# How much MB memory should each VM have.
-$vmMemory = 1024
+echo "Converting files to Linux line endings"
 
-# Which image to use for the control Ubuntu machines.
-$controlRequestImagePath = "current"
-
-# On which port do we expose the Docker registry that is running on the Control
-# machine.
-$controlDockerRegistryPort = 5000
-
-# This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
-$coreInstances = 3
-
-# The updated channel to use for CoreOS images.
-$coreUpdateChannel = 'stable'
-
-# The CoreOS image version requested.
-$coreRequiredImageVersion = ">= 308.0.1"
-
-# The CoreOS image to check for online.
-$coreRequestImagePath = "current"
-
-# Should the CoreOS machines expose their internal Docker socket.
-$coreExposeDocker = true
-
-# If the above is true, on which port should the Docker server listen for requests.
-$coreExposedDockerPort = 2375
+find /vagrant/automation/ -type f -exec dos2unix {} \; &>> $1
+find /vagrant/configuration/ -type f -exec dos2unix {} \; &>> $1

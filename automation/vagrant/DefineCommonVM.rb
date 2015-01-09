@@ -24,42 +24,17 @@
 # Version 0.0.6
 #
 
-# Should the VM provider output debug data about the VM through serial logs.
-$vmSerialLoggingEnabled = true
+# Defines common VM properties that is used by both the CoreOS nodes and the
+# control node.
 
-# Should the VM provisioning process log output
-$vmProvisionLoggingEnabled = true
+# Insert the Vagrant public key into the machines.
+def defineCommonVM(config)
+	config.ssh.insert_key = true
 
-# Should the VM provider build a headed VM.
-$vmGUIEnabled = false
-
-# How many cores should each VM have.
-$vmCPUCores = 1
-
-# How much MB memory should each VM have.
-$vmMemory = 1024
-
-# Which image to use for the control Ubuntu machines.
-$controlRequestImagePath = "current"
-
-# On which port do we expose the Docker registry that is running on the Control
-# machine.
-$controlDockerRegistryPort = 5000
-
-# This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
-$coreInstances = 3
-
-# The updated channel to use for CoreOS images.
-$coreUpdateChannel = 'stable'
-
-# The CoreOS image version requested.
-$coreRequiredImageVersion = ">= 308.0.1"
-
-# The CoreOS image to check for online.
-$coreRequestImagePath = "current"
-
-# Should the CoreOS machines expose their internal Docker socket.
-$coreExposeDocker = true
-
-# If the above is true, on which port should the Docker server listen for requests.
-$coreExposedDockerPort = 2375
+	# Configure how much memory and CPU cores each VM should have.
+	config.vm.provider :virtualbox do |vb|
+		vb.gui = $vmGUIEnabled
+		vb.memory = $vmMemory
+		vb.cpus = $vmCPUCores
+	end
+end

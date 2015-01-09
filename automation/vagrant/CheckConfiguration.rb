@@ -1,4 +1,3 @@
-#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -25,18 +24,11 @@
 # Version 0.0.6
 #
 
-sudo mkdir $2 &> /dev/null
-sudo touch $1 &> /dev/null
+# Check to make sure that the CoreOS instance count is set to an acceptable value.
+if $coreInstances < 1
+	raise 'The number of CoreOS machines cant be less than 1'
+end
 
-echo "Updating package list"
-
-sudo apt-get update &>> $1
-
-echo "Installing dos2unix utility"
-
-sudo apt-get install dos2unix -y &>> $1
-
-echo "Converting files to Linux line endings"
-
-find /vagrant/automation/ -type f -exec dos2unix {} \; &>> $1
-find /vagrant/configuration/ -type f -exec dos2unix {} \; &>> $1
+if $coreInstances > 8
+	raise 'The number of CoreOS machines cant be more than 8'
+end
