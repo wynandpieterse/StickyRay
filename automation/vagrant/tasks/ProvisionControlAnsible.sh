@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -24,8 +25,14 @@
 # Version 0.1.0
 #
 
-# Standard Ignores
-[Gg]enerated/
+echo "Installing Ansible"
 
-# Vagrant Ignores
-.[Vv]agrant/
+sudo apt-get install ansible -y -o Dpkg::Options::="--force-confold" &>> $1
+
+echo "Downloading CoreOS bootstrap packages"
+
+ansible-galaxy install defunctzombie.coreos-bootstrap -p /vagrant/automation/ansible/roles &>> $1
+
+echo "Updating CoreOS installation to have Python"
+
+ansible-playbook /vagrant/automation/ansible/BootstrapCoreOSPython.yml &>> $1

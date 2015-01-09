@@ -1,4 +1,5 @@
-#
+#!/bin/bash
+# 
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -21,16 +22,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.6
+# Version 0.1.0
 #
 
-- name: Bootstrap control machine to have Docker Registry
-  hosts: control
-  sudo: true
-  vars:
-    docker_registry_host_path: /vagrant/intermediate/docker/control/registry
-    docker_registry_container_path: /registry
-    docker_registry_port: 5000
-    docker_settings_flavor: local
-  roles:
-    - stickyray.docker-registry
+echo "Updating control machine to have Docker"
+
+ansible-playbook /vagrant/automation/ansible/BootstrapControlDocker.yml &>> $1

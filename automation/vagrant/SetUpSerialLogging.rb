@@ -24,8 +24,17 @@
 # Version 0.1.0
 #
 
-# Standard Ignores
-[Gg]enerated/
+# Enables serial logging on the requested instances. This can be usefull for checking
+# startup errors on the VM itself. WARNING: Heavy performance intensive, only
+# user for low-level debugging requirements.
+def setUpSerialLogging(vmName)
+	if $vmSerialLoggingEnabled
+		currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
 
-# Vagrant Ignores
-.[Vv]agrant/
+		serialLogDirectory =  "generated/vagrant/serial/%s/" % vmName
+		serialFile = "%s%s.log" % [serialLogDirectory, currentTime]
+
+		FileUtils.mkdir_p(serialLogDirectory)
+		FileUtils.touch(serialFile)
+	end
+end

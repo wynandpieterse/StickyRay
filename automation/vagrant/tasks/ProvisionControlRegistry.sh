@@ -1,3 +1,4 @@
+#!/bin/bash
 # 
 # The MIT License (MIT)
 # 
@@ -24,8 +25,6 @@
 # Version 0.1.0
 #
 
-# Standard Ignores
-[Gg]enerated/
+echo "Updating control machine to have Docker registry"
 
-# Vagrant Ignores
-.[Vv]agrant/
+ansible-playbook /vagrant/automation/ansible/BootstrapControlDockerRegistry.yml &>> $1

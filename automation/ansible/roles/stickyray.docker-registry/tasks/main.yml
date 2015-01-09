@@ -1,5 +1,4 @@
-#!/bin/bash
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -22,9 +21,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.6
+# Version 0.1.0
 #
 
-echo "Updating control machine to have Docker registry"
+---
+# Role that creates a Docker registry on the target machines.
+ - name: Create Docker registry data folder
+   file:
+     path: "{{ docker_registry_host_path }}"
+     state: directory
 
-ansible-playbook /vagrant/automation/BootstrapControlDockerRegistry.yml &>> $1
+ - name: Install and run the Docker registry
+   raw: docker run -d -p {{ docker_registry_port }}:5000 -e SETTINGS_FLAVOR={{ docker_settings_flavor }} -e STORAGE_PATH={{ docker_registry_container_path }} -v {{ docker_registry_host_path }}:{{ docker_registry_container_path }} registry

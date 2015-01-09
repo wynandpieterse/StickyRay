@@ -21,15 +21,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.6
+# Version 0.1.0
 #
 
-$virtualBoxGUI = false
-$virtualBoxCPUs = 1
-$virtualBoxMemory = 1024
+# Check to make sure that the CoreOS instance count is set to an acceptable value.
+if $coreInstances < 1
+	raise 'The number of CoreOS machines cant be less than 1'
+end
 
-# This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
-$numberOfCoreMachines = 3
-$coreUpdateChannel = 'stable'
-$exposeDocker = true
-$exposedDockerPort = 2375
+if $coreInstances > 8
+	raise 'The number of CoreOS machines cant be more than 8'
+end

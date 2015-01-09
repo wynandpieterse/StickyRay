@@ -1,4 +1,4 @@
-#
+# 
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -21,9 +21,25 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.6
+# Version 0.1.0
 #
 
-- name: Install Docker
-  sudo: yes
-  apt: name=docker.io state=present
+# Create the log file that provisioning scripts can write out to.
+def setUpProvisionLogging(vmName)
+	if $vmProvisionLoggingEnabled
+		currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
+
+		logDirectoryGuest = "/vagrant/generated/vagrant/provisioning/%s/" % vmName
+		logDirectoryHost = "generated/vagrant/provisioning/%s/" % vmName
+
+		logFileGuest = "%s%s.log" % [logDirectoryGuest, currentTime]
+		logFileHost = "%s%s.log" % [logDirectoryHost, currentTime]
+
+		FileUtils.mkdir_p(logDirectoryHost)
+		FileUtils.touch(logFileHost)
+
+		return logFileGuest
+	else
+		return "/dev/null"
+	end
+end

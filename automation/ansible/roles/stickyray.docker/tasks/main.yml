@@ -1,5 +1,4 @@
-#!/bin/bash
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -22,9 +21,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.6
+# Version 0.1.0
 #
 
-echo "Updating control machine to have Docker"
-
-ansible-playbook /vagrant/automation/BootstrapControlDocker.yml &>> $1
+---
+# Role that installs Docker on the target machines
+ - name: Install Docker
+   apt: name=docker.io state=present

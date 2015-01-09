@@ -24,8 +24,26 @@
 # Version 0.1.0
 #
 
-# Standard Ignores
-[Gg]enerated/
+require 'open-uri'
+require 'yaml'
 
-# Vagrant Ignores
-.[Vv]agrant/
+# Regenerate the CoreOS cluster token if the system is brought up on Vagrant.
+def setUpCoreOSClusterToken
+	generatedCoreFile = "generated/files/LocalUserData.yml"
+	baseCoreFile = "configuration/coreos/LocalUserData.yml"
+
+	if ARGV[0].eql?('up')
+		token = open('https://discovery.etcd.io/new').read
+
+		data = YAML.load(IO.readlines(baseCoreFile)[1..-1].join)
+		data['coreos']['etcd']['discovery'] = token
+
+		yaml = YAML.dump(data)
+
+		File.open(generatedCoreFile, 'w') { |file| file.write("#{yaml}") }
+
+		return generatedCoreFile
+	else
+		return baseCoreFile
+	end
+end

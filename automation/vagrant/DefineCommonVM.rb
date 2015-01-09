@@ -21,11 +21,20 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.6
+# Version 0.1.0
 #
 
-- name: Bootstrap CoreOS hosts
-  hosts: core
-  gather_facts: false
-  roles:
-    - defunctzombie.coreos-bootstrap
+# Defines common VM properties that is used by both the CoreOS nodes and the
+# control node.
+
+# Insert the Vagrant public key into the machines.
+def defineCommonVM(config)
+	config.ssh.insert_key = true
+
+	# Configure how much memory and CPU cores each VM should have.
+	config.vm.provider :virtualbox do |vb|
+		vb.gui = $vmGUIEnabled
+		vb.memory = $vmMemory
+		vb.cpus = $vmCPUCores
+	end
+end

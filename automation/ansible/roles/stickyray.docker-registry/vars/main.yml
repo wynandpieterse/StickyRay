@@ -21,10 +21,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.6
+# Version 0.1.0
 #
 
-- name: Bootstrap control machine to have Docker
-  hosts: control
-  roles:
-    - stickyray.docker
+---
+docker_registry_host_path: /registry
+docker_registry_container_path: /registry
+docker_registry_port: 5000
+docker_settings_flavor: local

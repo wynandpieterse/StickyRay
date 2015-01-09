@@ -1,4 +1,5 @@
-#
+#!/bin/bash
+# 
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -21,13 +22,18 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 # 
-# Version 0.0.6
+# Version 0.1.0
 #
 
-- name: Create Docker registry data folder
-  file:
-    path: "{{ docker_registry_host_path }}"
-    state: directory
+echo "Updating package list"
 
-- name: Install and run a Docker registry
-  raw: docker run -d -p {{ docker_registry_port }}:5000 -e SETTINGS_FLAVOR={{ docker_settings_flavor }} -e STORAGE_PATH={{ docker_registry_container_path }} -v {{ docker_registry_host_path }}:{{ docker_registry_container_path }} registry
+sudo apt-get update &>> $1
+
+echo "Installing dos2unix utility"
+
+sudo apt-get install dos2unix -y &>> $1
+
+echo "Converting files to Linux line endings"
+
+find /vagrant/automation/ -type f -exec dos2unix {} \; &>> $1
+find /vagrant/configuration/ -type f -exec dos2unix {} \; &>> $1

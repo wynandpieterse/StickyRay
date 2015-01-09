@@ -1,4 +1,4 @@
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -24,8 +24,11 @@
 # Version 0.1.0
 #
 
-# Standard Ignores
-[Gg]enerated/
-
-# Vagrant Ignores
-.[Vv]agrant/
+---
+# Bootstrap the control machine to have Docker installed on it.
+ - name: Bootstrap control machine to have Docker
+   hosts: control
+   sudo: yes
+   gather_facts: no
+   roles:
+     - stickyray.docker

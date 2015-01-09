@@ -1,4 +1,4 @@
-# 
+#
 # The MIT License (MIT)
 # 
 # Copyright (c) 2014 Wynand Pieterse
@@ -24,8 +24,13 @@
 # Version 0.1.0
 #
 
-# Standard Ignores
-[Gg]enerated/
-
-# Vagrant Ignores
-.[Vv]agrant/
+---
+# Bootstrap the control machine to have a useable Docker registry on it.
+ - name: Bootstrap control machine to have Docker Registry
+   hosts: control
+   sudo: yes
+   gather_facts: no
+   vars_files:
+     - /vagrant/configuration/control/DockerRegistry.yml
+   roles:
+     - stickyray.docker-registry
