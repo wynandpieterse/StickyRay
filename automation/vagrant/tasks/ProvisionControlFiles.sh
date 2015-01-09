@@ -131,7 +131,7 @@ echo "Copying Ansible host file"
 
 sudo mkdir /etc/ansible &>> $1
 sudo cp /tmp/hosts /etc/ansible/hosts &>> $1
-sudo cp /tmp/hosts /vagrant/generated/ansible/LocalInventory &>> $1
+sudo cp /tmp/hosts /vagrant/generated/files/LocalInventory &>> $1
 sudo chmod 666 /etc/ansible/hosts &>> $1
 
 echo "Copying over Vagrant private key"
