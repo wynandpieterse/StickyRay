@@ -27,19 +27,7 @@
 ---
 # Builds the application and deploys the code to the application servers.
  - name: Build application container
-   sudo: yes
-   hosts: control
    raw: docker build -t 10.10.10.10:5000/application /application/
 
  - name: Upload application container to registry
-   sudo: yes
-   hosts: control
    raw: docker push 10.10.10.10:5000/application
-
- - name: Pull the application container onto the web servers
-   hosts: web
-   raw: docker pull 10.10.10.10:5000/application
-
- - name: Start the application container on the web servers
-   hosts: web
-   raw: docker run -t deployedApplication -p 80:8080 10.10.10.10:5000/application

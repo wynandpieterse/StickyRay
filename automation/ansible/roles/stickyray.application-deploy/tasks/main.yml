@@ -25,15 +25,21 @@
 #
 
 ---
-# Build the application Docker container if neccesary, and deploy the new
-# built code to the web servers
- - name: Build the application code into container
-   hosts: control
-   sudo: yes
-   roles:
-     - stickyray.application-build
+# Deploy the application to the web servers
+ - name: Stop old running container
+   raw: docker stop deployedApplication
+   ignore_errors: yes
 
- - name: Deploy the application container to web servers
-   hosts: web
-   roles:
-     - stickyray.application-deploy
+ - name: Remove old container image
+   raw: docker rm deployedApplication
+   ignore_errors: yes
+
+ - name: Delete old container image
+   raw: docker rmi 10.10.10.10:5000/application
+   ignore_errors: yes
+
+ - name: Pull the application container onto the web servers
+   raw: docker pull 10.10.10.10:5000/application
+
+ - name: Start the application container on the web servers
+   raw: docker run -d --name="deployedApplication" -p 8080:8080 10.10.10.10:5000/application

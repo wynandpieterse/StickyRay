@@ -46,7 +46,7 @@ def defineCoreOSVM(core, vmName, instanceID)
 	end
 
 	# Expose the web server port for application access
-	core.vm.network "forwarded_port", guest: 80, host: $coreExposeWebPort, auto_correct: true
+	core.vm.network "forwarded_port", guest: 8080, host: $coreExposeWebPort, auto_correct: true
 
 	# Expose the internal Docker server port if the user chooses for that.
 	if $coreExposeDocker

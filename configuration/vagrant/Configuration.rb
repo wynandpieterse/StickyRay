@@ -59,7 +59,7 @@ $coreRequiredImageVersion = ">= 308.0.1"
 $coreRequestImagePath = "current"
 
 # The port that CoreOS will expose for web traffic
-$coreExposeWebPort = 80
+$coreExposeWebPort = 8080
 
 # Should the CoreOS machines expose their internal Docker socket.
 $coreExposeDocker = true
