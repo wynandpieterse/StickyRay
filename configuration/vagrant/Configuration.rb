@@ -36,6 +36,13 @@ $vmCPUCores = 1
 # How much MB memory should each VM have.
 $vmMemory = 1024
 
+# Which image to use for the control Ubuntu machines.
+$controlRequestImagePath = "current"
+
+# On which port do we expose the Docker registry that is running on the Control
+# machine.
+$controlDockerRegistryPort = 5000
+
 # This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
 $coreInstances = 3
 
