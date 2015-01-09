@@ -28,12 +28,17 @@
 def setUpProvisionLogging(vmName)
 	if $vmProvisionLoggingEnabled
 		currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
-		logDirectory = "/vagrant/generated/vagrant/provisioning/%s/" % vmName
-		logFile = "%s%s.log" % [$logDirectory, $currentTime]
 
-		FileUtils.mkdir_p(logDirectory)
+		logDirectoryGuest = "/vagrant/generated/vagrant/provisioning/%s/" % vmName
+		logDirectoryHost = "../../generated/vagrant/provisioning/%s/" % vmName
 
-		return logDirectory
+		logFileGuest = "%s%s.log" % [logDirectoryGuest, currentTime]
+		logFileHost = "%s%s.log" % [logDirectoryHost, currentTime]
+
+		FileUtils.mkdir_p(logDirectoryHost)
+		FileUtils.touch(logFileHost)
+
+		return logFileGuest
 	else
 		return "/dev/null"
 	end
