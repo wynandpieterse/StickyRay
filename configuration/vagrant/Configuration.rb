@@ -42,6 +42,12 @@ $coreInstances = 3
 # The updated channel to use for CoreOS images.
 $coreUpdateChannel = 'stable'
 
+# The CoreOS image version requested.
+$coreRequiredImageVersion = ">= 308.0.1"
+
+# The CoreOS image to check for online.
+$coreRequestImagePath = "current"
+
 # Should the CoreOS machines expose their internal Docker socket.
 $coreExposeDocker = true
 

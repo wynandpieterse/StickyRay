@@ -27,19 +27,19 @@
 # Creates and builds the CoreOS cluster for our testing purposes. These machines
 # will be controlled by the control VM.
 (1..$coreInstances).each do |instanceID|
-	config.vm.define vmName = "core-%02d" % instanceID do |core|
+	config.vm.define vmName = "core%02d" % instanceID do |core|
 		core.vm.hostname = vmName
 		core.vm.box = "coreos-%s" % $coreUpdateChannel
-		core.vm.box_version = "494.5.0"
+		core.vm.box_version = $coreRequiredImageVersion
 		core.vm.network :private_network, ip: "10.10.10.#{instanceID + 10}"
 
 		# Select the image to use for our core VM's.
 		core.vm.provider :virtualbox do |vb, override|
-			override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/494.5.0/coreos_production_vagrant.json" % $coreUpdateChannel
+			override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/%s/coreos_production_vagrant.json" % [$coreUpdateChannel, $coreRequestImagePath]
 		end
 
 		core.vm.provider :vmware_fusion do |vb, override|
-			override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/494.5.0/coreos_production_vagrant_vmware_fusion.json" % $coreUpdateChannel
+			override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/%s/coreos_production_vagrant_vmware_fusion.json" % [$coreUpdateChannel, $coreRequestImagePath]
 		end
 
 		# Expose the internal Docker server port if the user chooses for that.
