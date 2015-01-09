@@ -30,7 +30,7 @@ def setUpProvisionLogging(vmName)
 		currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
 
 		logDirectoryGuest = "/vagrant/generated/vagrant/provisioning/%s/" % vmName
-		logDirectoryHost = "../../generated/vagrant/provisioning/%s/" % vmName
+		logDirectoryHost = "generated/vagrant/provisioning/%s/" % vmName
 
 		logFileGuest = "%s%s.log" % [logDirectoryGuest, currentTime]
 		logFileHost = "%s%s.log" % [logDirectoryHost, currentTime]
