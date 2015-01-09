@@ -143,7 +143,7 @@ sudo chown vagrant:vagrant /home/vagrant/.ssh/VagrantPrivateKey &>> $1
 echo "Copying Ansible configuration files to correct location"
 
 sudo cp /tmp/.ansible.cfg /home/vagrant/.ansible.cfg &>> $1
-sudo cp /tmp/.ansible.cfg /vagrant/generated/ansible/.ansible.cfg &>> $1
+sudo cp /tmp/.ansible.cfg /vagrant/generated/files/.ansible.cfg &>> $1
 
 sudo cp /tmp/.ssh.cfg /home/vagrant/.ssh.cfg &>> $1
-sudo cp /tmp/.ssh.cfg /vagrant/generated/ansible/.ssh.cfg &>> $1
+sudo cp /tmp/.ssh.cfg /vagrant/generated/files/.ssh.cfg &>> $1

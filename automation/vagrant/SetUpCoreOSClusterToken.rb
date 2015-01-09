@@ -29,13 +29,10 @@ require 'yaml'
 
 # Regenerate the CoreOS cluster token if the system is brought up on Vagrant.
 def setUpCoreOSClusterToken
-	generatedCoreDirectory = File.join(File.dirname(__FILE__), "generated/coreos/")
-	generatedCoreFile = "generated/coreos/LocalUserData.yml"
+	generatedCoreFile = "generated/files/LocalUserData.yml"
 	baseCoreFile = "configuration/coreos/LocalUserData.yml"
 
 	if ARGV[0].eql?('up')
-		FileUtils.mkdir_p(generatedCoreDirectory)
-
 		token = open('https://discovery.etcd.io/new').read
 
 		data = YAML.load(IO.readlines(baseCoreFile)[1..-1].join)

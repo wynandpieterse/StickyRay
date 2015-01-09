@@ -31,8 +31,8 @@ def setUpSerialLogging(vmName)
 	if $vmSerialLoggingEnabled
 		currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
 
-		serialLogDirectory =  File.join(File.dirname(__FILE__), "generated/vagrant/serial/%s/" % vmName)
-		serialFile = File.join(serialLogDirectory, "%s.log" % currentTime)
+		serialLogDirectory =  "generated/vagrant/serial/%s/" % vmName
+		serialFile = "%s%s.log" % [serialLogDirectory, currentTime]
 
 		FileUtils.mkdir_p(serialLogDirectory)
 		FileUtils.touch(serialFile)

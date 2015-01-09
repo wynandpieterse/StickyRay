@@ -51,6 +51,9 @@ require $defineControlVM
 
 # Configure the actual vagrant box.
 Vagrant.configure("2") do |config|
+	generatedCoreDirectory = File.join(File.dirname(__FILE__), "generated/files/")
+	FileUtils.mkdir_p(generatedCoreDirectory)
+
     defineCommonVM config
 
     (1..$coreInstances).each do |instanceID|
