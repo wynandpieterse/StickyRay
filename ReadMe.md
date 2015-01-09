@@ -14,4 +14,4 @@ the following components to ease development:
  + Docker
 
 =========
-###### Version 0.0.6
+###### Version 0.1.0
