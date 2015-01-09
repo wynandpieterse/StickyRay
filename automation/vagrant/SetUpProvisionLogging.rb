@@ -25,8 +25,16 @@
 #
 
 # Create the log file that provisioning scripts can write out to.
-currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
-logDirectory = "/vagrant/generated/vagrant/provisioning/%s/" % vmName
-logFile = "%s%s.log" % [$logDirectory, $currentTime]
+def setUpProvisionLogging(vmName)
+	if $vmProvisionLoggingEnabled
+		currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
+		logDirectory = "/vagrant/generated/vagrant/provisioning/%s/" % vmName
+		logFile = "%s%s.log" % [$logDirectory, $currentTime]
 
-FileUtils.mkdir_p(logDirectory)
+		FileUtils.mkdir_p(logDirectory)
+
+		return logDirectory
+	else
+		return "/dev/null"
+	end
+end

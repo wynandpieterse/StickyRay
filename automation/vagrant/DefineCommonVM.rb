@@ -28,11 +28,13 @@
 # control node.
 
 # Insert the Vagrant public key into the machines.
-config.ssh.insert_key = true
+def defineCommonVM(config)
+	config.ssh.insert_key = true
 
-# Configure how much memory and CPU cores each VM should have.
-config.vm.provider :virtualbox do |vb|
-	vb.gui = $vmGUIEnabled
-	vb.memory = $vmMemory
-	vb.cpus = $vmCPUCores
+	# Configure how much memory and CPU cores each VM should have.
+	config.vm.provider :virtualbox do |vb|
+		vb.gui = $vmGUIEnabled
+		vb.memory = $vmMemory
+		vb.cpus = $vmCPUCores
+	end
 end

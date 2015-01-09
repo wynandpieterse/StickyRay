@@ -27,6 +27,9 @@
 # Should the VM provider output debug data about the VM through serial logs.
 $vmSerialLoggingEnabled = true
 
+# Should the VM provisioning process log output
+$vmProvisionLoggingEnabled = true
+
 # Should the VM provider build a headed VM.
 $vmGUIEnabled = false
 

@@ -48,9 +48,21 @@ require $configurationVariables
 require $checkConfigurationVariables
 require $checkCoreOSClusterToken
 
+require $defineCommonVM
+require $defineCoreOSVM
+require $defineControlVM
+
 # Configure the actual vagrant box.
 Vagrant.configure("2") do |config|
-    eval(IO.read($defineCommonVM), binding)
-    eval(IO.read($defineCoreOSVM), binding)
-    eval(IO.read($defineControlVM), binding)
+    defineCommonVM config
+
+    (1..$coreInstances).each do |instanceID|
+		config.vm.define vmName = "core%02d" % instanceID do |core|
+			defineCoreOSVM core, vmName, instanceID
+		end
+	end
+
+    config.vm.define vmName = "control", primary: true  do |control|
+    	defineControlVM control, vmName
+    end
 end
