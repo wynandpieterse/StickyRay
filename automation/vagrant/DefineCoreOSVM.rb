@@ -26,6 +26,7 @@
 
 require $setUpSerialLogging
 require $setUpProvisionLogging
+require $setUpCoreOSClusterToken
 
 # Creates and builds the CoreOS cluster for our testing purposes. These machines
 # will be controlled by the control VM.
@@ -56,10 +57,8 @@ def defineCoreOSVM(core, vmName, instanceID)
 	logFile = setUpProvisionLogging vmName
 
 	# Provision the machines.
-	if File.exists?($coreUserConfiguration)
-		core.vm.provision :file, :source => "#{$coreUserConfiguration}", :destination => "/tmp/vagrantfile-user-data"
-		core.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
-	end
+	core.vm.provision :file, :source => setUpCoreOSClusterToken, :destination => "/tmp/vagrantfile-user-data"
+	core.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
 
 	# Disable guest additions as CoreOS has no need for that.
 	core.vm.provider :virtualbox do |v|

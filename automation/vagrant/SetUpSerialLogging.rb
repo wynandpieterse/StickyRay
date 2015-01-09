@@ -29,12 +29,12 @@
 # user for low-level debugging requirements.
 def setUpSerialLogging(vmName)
 	if $vmSerialLoggingEnabled
-		serialLogDirectory =  File.join(File.dirname(__FILE__), "generated/vagrant/serial/%s/" % vmName)
-		FileUtils.mkdir_p(serialLogDirectory)
-
 		currentTime = Time.now.strftime("%d-%m-%Y-%H-%M")
 
+		serialLogDirectory =  File.join(File.dirname(__FILE__), "generated/vagrant/serial/%s/" % vmName)
 		serialFile = File.join(serialLogDirectory, "%s.log" % currentTime)
+
+		FileUtils.mkdir_p(serialLogDirectory)
 		FileUtils.touch(serialFile)
 	end
 end

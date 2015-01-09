@@ -24,20 +24,29 @@
 # Version 0.0.6
 #
 
+require 'open-uri'
+require 'yaml'
+
 # Regenerate the CoreOS cluster token if the system is brought up on Vagrant.
-if File.exists?('../../configuration/coreos/LocalUserData.yml') && ARGV[0].eql?('up')
-	require 'open-uri'
-	require 'yaml'
+def setUpCoreOSClusterToken
+	generatedCoreDirectory = File.join(File.dirname(__FILE__), "generated/coreos/")
+	generatedCoreFile = "generated/coreos/LocalUserData.yml"
+	baseCoreFile = "configuration/coreos/LocalUserData.yml"
 
-	serialLogDirectory = File.join(File.dirname(__FILE__), "../../generated/coreos/")
-	FileUtils.mkdir_p(serialLogDirectory)
+	if ARGV[0].eql?('up')
+		FileUtils.mkdir_p(generatedCoreDirectory)
 
-	token = open('https://discovery.etcd.io/new').read
+		token = open('https://discovery.etcd.io/new').read
 
-	data = YAML.load(IO.readlines('../../configuration/coreos/LocalUserData.yml')[1..-1].join)
-	data['coreos']['etcd']['discovery'] = token
+		data = YAML.load(IO.readlines(baseCoreFile)[1..-1].join)
+		data['coreos']['etcd']['discovery'] = token
 
-	yaml = YAML.dump(data)
+		yaml = YAML.dump(data)
 
-	File.open('../../generated/coreos/LocalUserData.yml', 'w') { |file| file.write("#{yaml}") }
+		File.open(generatedCoreFile, 'w') { |file| file.write("#{yaml}") }
+
+		return generatedCoreFile
+	else
+		return baseCoreFile
+	end
 end
