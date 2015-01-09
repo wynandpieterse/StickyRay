@@ -28,6 +28,5 @@
 # Build the application Docker container if neccesary, and deploy the new
 # built code to the web servers
  - name: Deploy application to web servers
-   hosts: web
    roles:
      - stickyray.application
