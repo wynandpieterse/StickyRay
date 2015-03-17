@@ -29,7 +29,7 @@
 
 # Insert the Vagrant public key into the machines.
 def defineCommonVM(config)
-	config.ssh.insert_key = true
+	config.ssh.insert_key = false
 
 	# Configure how much memory and CPU cores each VM should have.
 	config.vm.provider :virtualbox do |vb|
