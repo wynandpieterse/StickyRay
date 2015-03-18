@@ -87,10 +87,6 @@ printf "[control]\n" >> /tmp/hosts
 printf "localhost\n" >> /tmp/hosts
 printf "\n" >> /tmp/hosts
 
-printf "[mainmonitor]\n" >> /tmp/hosts
-printf "localhost\n" >> /tmp/hosts
-printf "\n" >> /tmp/hosts
-
 printf "[core]\n" >> /tmp/hosts
 for (( instance = 1; instance <= $2; instance++ ))
 do
@@ -108,6 +104,14 @@ done
 printf "\n" >> /tmp/hosts
 
 printf "[database]\n" >> /tmp/hosts
+for (( instance = 1; instance <= $2; instance++ ))
+do
+	printf "core0%i\n" "$instance" >> /tmp/hosts
+done
+
+printf "\n" >> /tmp/hosts
+
+printf "[loadbalancer]\n" >> /tmp/hosts
 for (( instance = 1; instance <= $2; instance++ ))
 do
 	printf "core0%i\n" "$instance" >> /tmp/hosts
