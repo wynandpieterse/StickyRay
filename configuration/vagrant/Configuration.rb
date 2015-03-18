@@ -34,7 +34,7 @@ $vmProvisionLoggingEnabled = true
 $vmGUIEnabled = false
 
 # How many cores should each VM have.
-$vmCPUCores = 1
+$vmCPUCores = 2
 
 # How much MB memory should each VM have.
 $vmMemory = 1024
