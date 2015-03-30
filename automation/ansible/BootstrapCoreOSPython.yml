@@ -28,7 +28,7 @@
 # This playbook makes sure that CoreOS hosts have a Python interpreter on them
 # so that Ansible can use modules there.
  - name: Bootstrap CoreOS hosts to have a Python interpreter
-   hosts: core
+   hosts: minions
    gather_facts: no
    roles:
      - defunctzombie.coreos-bootstrap
