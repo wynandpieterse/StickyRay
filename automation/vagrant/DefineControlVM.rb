@@ -50,5 +50,4 @@ def defineControlVM(control, vmName)
 	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % [logFile, $coreInstances]
 	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlAnsible.sh", :privileged => false, :args => "%s" % logFile
 	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlDocker.sh", :privileged => false, :args => "%s" % logFile
-	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlRegistry.sh", :privileged => false, :args => "%s" % logFile
 end

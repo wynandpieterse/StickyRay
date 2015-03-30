@@ -95,38 +95,6 @@ done
 
 printf "\n" >> /tmp/hosts
 
-printf "[web]\n" >> /tmp/hosts
-for (( instance = 1; instance <= $2; instance++ ))
-do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
-done
-
-printf "\n" >> /tmp/hosts
-
-printf "[database]\n" >> /tmp/hosts
-for (( instance = 1; instance <= $2; instance++ ))
-do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
-done
-
-printf "\n" >> /tmp/hosts
-
-printf "[loadbalancer]\n" >> /tmp/hosts
-for (( instance = 1; instance <= $2; instance++ ))
-do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
-done
-
-printf "\n" >> /tmp/hosts
-
-printf "[monitor]\n" >> /tmp/hosts
-for (( instance = 1; instance <= $2; instance++ ))
-do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
-done
-
-printf "\n" >> /tmp/hosts
-
 echo "Copying built system hosts file"
 
 sudo cp /tmp/systemhosts /etc/hosts
