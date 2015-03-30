@@ -32,7 +32,7 @@ printf "127.0.0.1 master\n" >> /tmp/systemhosts
 
 for (( instance = 1; instance <= $2; instance++ ))
 do
-	printf "10.10.10.1%i minion-%i\n" "$instance" "$instance" >> /tmp/systemhosts
+	printf "10.10.10.1%i minion-0%i\n" "$instance" "$instance" >> /tmp/systemhosts
 done
 
 echo "Building Ansible configuration file"
@@ -62,7 +62,7 @@ done
 
 for (( instance = 1; instance <= $2; instance++ ))
 do
-	printf "Host minion-%i\n" "$instance" >> /tmp/.ssh.cfg
+	printf "Host minion-0%i\n" "$instance" >> /tmp/.ssh.cfg
 	printf "   User core\n" >> /tmp/.ssh.cfg
 	printf "   UserKnownHostsFile /dev/null\n" >> /tmp/.ssh.cfg
 	printf "   StrictHostKeyChecking no\n" >> /tmp/.ssh.cfg
@@ -80,7 +80,7 @@ printf "master ansible_connection=local\n" >> /tmp/hosts
 
 for (( instance = 1; instance <= $2; instance++ ))
 do
-	printf "minion-%i ansible_connection=ssh ansible_ssh_host=10.10.10.1%i ansible_python_interpreter=\"PATH=/home/core/bin:$PATH python\"\n" "$instance" "$instance" >> /tmp/hosts
+	printf "minion-0%i ansible_connection=ssh ansible_ssh_host=10.10.10.1%i ansible_python_interpreter=\"PATH=/home/core/bin:$PATH python\"\n" "$instance" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts
@@ -92,7 +92,7 @@ printf "\n" >> /tmp/hosts
 printf "[minions]\n" >> /tmp/hosts
 for (( instance = 1; instance <= $2; instance++ ))
 do
-	printf "minion-%i\n" "$instance" >> /tmp/hosts
+	printf "minion-0%i\n" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts
