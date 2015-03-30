@@ -57,12 +57,12 @@ Vagrant.configure("2") do |config|
     defineCommonVM config
 
     (1..$coreInstances).each do |instanceID|
-		config.vm.define vmName = "core%02d" % instanceID do |core|
+		config.vm.define vmName = "minion-%02d" % instanceID do |core|
 			defineCoreOSVM core, vmName, instanceID
 		end
 	end
 
-    config.vm.define vmName = "control", primary: true  do |control|
+    config.vm.define vmName = "master", primary: true  do |control|
     	defineControlVM control, vmName
     end
 end

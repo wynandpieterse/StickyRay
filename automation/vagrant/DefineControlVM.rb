@@ -36,9 +36,6 @@ def defineControlVM(control, vmName)
 	# Map the project directory to the VM
 	control.vm.synced_folder "../", "/application"
 
-	# Forward our Docker registry port to the outside world.
-	control.vm.network "forwarded_port", guest: 5000, host: $controlDockerRegistryPort, auto_correct: true
-
 	# Enabled serial logging if the user asked for it.
 	setUpSerialLogging vmName
 
