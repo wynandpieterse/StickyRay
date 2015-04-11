@@ -2,7 +2,7 @@
 #
 # The MIT License (MIT)
 # 
-# Copyright (c) 2014 Wynand Pieterse
+# Copyright (c) 2015 Wynand Pieterse
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,11 @@
 echo "Building system host file"
 
 printf "127.0.0.1 localhost\n" >> /tmp/systemhosts
+printf "127.0.0.1 master\n" >> /tmp/systemhosts
 
 for (( instance = 1; instance <= $2; instance++ ))
 do
-	printf "10.10.10.1%i core0%i\n" "$instance" "$instance" >> /tmp/systemhosts
+	printf "10.10.10.1%i minion-0%i\n" "$instance" "$instance" >> /tmp/systemhosts
 done
 
 echo "Building Ansible configuration file"
@@ -61,7 +62,7 @@ done
 
 for (( instance = 1; instance <= $2; instance++ ))
 do
-	printf "Host core0%i\n" "$instance" >> /tmp/.ssh.cfg
+	printf "Host minion-0%i\n" "$instance" >> /tmp/.ssh.cfg
 	printf "   User core\n" >> /tmp/.ssh.cfg
 	printf "   UserKnownHostsFile /dev/null\n" >> /tmp/.ssh.cfg
 	printf "   StrictHostKeyChecking no\n" >> /tmp/.ssh.cfg
@@ -75,54 +76,23 @@ done
 echo "Building default Ansible host file for local development"
 
 printf "localhost ansible_connection=local\n" >> /tmp/hosts
+printf "master ansible_connection=local\n" >> /tmp/hosts
 
 for (( instance = 1; instance <= $2; instance++ ))
 do
-	printf "core0%i ansible_connection=ssh ansible_ssh_host=10.10.10.1%i ansible_python_interpreter=\"PATH=/home/core/bin:$PATH python\"\n" "$instance" "$instance" >> /tmp/hosts
+	printf "minion-0%i ansible_connection=ssh ansible_ssh_host=10.10.10.1%i ansible_python_interpreter=\"PATH=/home/core/bin:$PATH python\"\n" "$instance" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts
 
-printf "[control]\n" >> /tmp/hosts
-printf "localhost\n" >> /tmp/hosts
+printf "[masters]\n" >> /tmp/hosts
+printf "master\n" >> /tmp/hosts
 printf "\n" >> /tmp/hosts
 
-printf "[core]\n" >> /tmp/hosts
+printf "[minions]\n" >> /tmp/hosts
 for (( instance = 1; instance <= $2; instance++ ))
 do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
-done
-
-printf "\n" >> /tmp/hosts
-
-printf "[web]\n" >> /tmp/hosts
-for (( instance = 1; instance <= $2; instance++ ))
-do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
-done
-
-printf "\n" >> /tmp/hosts
-
-printf "[database]\n" >> /tmp/hosts
-for (( instance = 1; instance <= $2; instance++ ))
-do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
-done
-
-printf "\n" >> /tmp/hosts
-
-printf "[loadbalancer]\n" >> /tmp/hosts
-for (( instance = 1; instance <= $2; instance++ ))
-do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
-done
-
-printf "\n" >> /tmp/hosts
-
-printf "[monitor]\n" >> /tmp/hosts
-for (( instance = 1; instance <= $2; instance++ ))
-do
-	printf "core0%i\n" "$instance" >> /tmp/hosts
+	printf "minion-0%i\n" "$instance" >> /tmp/hosts
 done
 
 printf "\n" >> /tmp/hosts

@@ -1,7 +1,7 @@
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2014 Wynand Pieterse
+# Copyright (c) 2015 Wynand Pieterse
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,6 @@ def defineControlVM(control, vmName)
 	# Map the project directory to the VM
 	control.vm.synced_folder "../", "/application"
 
-	# Forward our Docker registry port to the outside world.
-	control.vm.network "forwarded_port", guest: 5000, host: $controlDockerRegistryPort, auto_correct: true
-
 	# Enabled serial logging if the user asked for it.
 	setUpSerialLogging vmName
 
@@ -50,5 +47,4 @@ def defineControlVM(control, vmName)
 	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlFiles.sh", :privileged => false, :args => "%s %s" % [logFile, $coreInstances]
 	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlAnsible.sh", :privileged => false, :args => "%s" % logFile
 	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlDocker.sh", :privileged => false, :args => "%s" % logFile
-	control.vm.provision :shell, :path => "automation/vagrant/tasks/ProvisionControlRegistry.sh", :privileged => false, :args => "%s" % logFile
 end

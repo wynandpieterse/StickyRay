@@ -1,7 +1,7 @@
 #
 # The MIT License (MIT)
 # 
-# Copyright (c) 2014 Wynand Pieterse
+# Copyright (c) 2015 Wynand Pieterse
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 ---
 # Bootstrap the control machine to have Docker installed on it.
  - name: Bootstrap control machine to have Docker
-   hosts: control
+   hosts: master
    sudo: yes
    gather_facts: no
    roles:

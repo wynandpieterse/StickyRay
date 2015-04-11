@@ -1,7 +1,7 @@
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2014 Wynand Pieterse
+# Copyright (c) 2015 Wynand Pieterse
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -57,12 +57,12 @@ Vagrant.configure("2") do |config|
     defineCommonVM config
 
     (1..$coreInstances).each do |instanceID|
-		config.vm.define vmName = "core%02d" % instanceID do |core|
+		config.vm.define vmName = "minion-%02d" % instanceID do |core|
 			defineCoreOSVM core, vmName, instanceID
 		end
 	end
 
-    config.vm.define vmName = "control", primary: true  do |control|
+    config.vm.define vmName = "master", primary: true  do |control|
     	defineControlVM control, vmName
     end
 end

@@ -1,7 +1,7 @@
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2014 Wynand Pieterse
+# Copyright (c) 2015 Wynand Pieterse
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -44,9 +44,6 @@ def defineCoreOSVM(core, vmName, instanceID)
 	core.vm.provider :vmware_fusion do |vb, override|
 		override.vm.box_url = "http://%s.release.core-os.net/amd64-usr/%s/coreos_production_vagrant_vmware_fusion.json" % [$coreUpdateChannel, $coreRequestImagePath]
 	end
-
-	# Expose the web server port for application access
-	core.vm.network "forwarded_port", guest: 8080, host: $coreExposeWebPort, auto_correct: true
 
 	# Expose the internal Docker server port if the user chooses for that.
 	if $coreExposeDocker

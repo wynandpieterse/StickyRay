@@ -1,7 +1,7 @@
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2014 Wynand Pieterse
+# Copyright (c) 2015 Wynand Pieterse
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 # This playbook makes sure that CoreOS hosts have a Python interpreter on them
 # so that Ansible can use modules there.
  - name: Bootstrap CoreOS hosts to have a Python interpreter
-   hosts: core
+   hosts: minions
    gather_facts: no
    roles:
      - defunctzombie.coreos-bootstrap

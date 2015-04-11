@@ -1,7 +1,7 @@
 # 
 # The MIT License (MIT)
 # 
-# Copyright (c) 2014 Wynand Pieterse
+# Copyright (c) 2015 Wynand Pieterse
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -34,17 +34,13 @@ $vmProvisionLoggingEnabled = true
 $vmGUIEnabled = false
 
 # How many cores should each VM have.
-$vmCPUCores = 2
+$vmCPUCores = 8
 
 # How much MB memory should each VM have.
 $vmMemory = 1024
 
 # Which image to use for the control Ubuntu machines.
 $controlRequestImagePath = "current"
-
-# On which port do we expose the Docker registry that is running on the Control
-# machine.
-$controlDockerRegistryPort = 5000
 
 # This value needs to be between 1 and 8. The number of CoreOS machines to spin up.
 $coreInstances = 3
@@ -57,9 +53,6 @@ $coreRequiredImageVersion = ">= 308.0.1"
 
 # The CoreOS image to check for online.
 $coreRequestImagePath = "current"
-
-# The port that CoreOS will expose for web traffic
-$coreExposeWebPort = 8080
 
 # Should the CoreOS machines expose their internal Docker socket.
 $coreExposeDocker = true
